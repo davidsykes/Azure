@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 
 namespace CheapFoodApp.Pages
@@ -6,6 +8,10 @@ namespace CheapFoodApp.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+
+        [BindProperty]
+        public string SelectedFruit { get; set; } = "";
+        public List<SelectListItem> FruitOptions { get; set; } = [];
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -34,7 +40,12 @@ namespace CheapFoodApp.Pages
                     }
                 }
 
-                Console.WriteLine(rows.Count);
+                FruitOptions = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "apple", Text = "Apple" },
+            new SelectListItem { Value = "banana", Text = "Banana" },
+            new SelectListItem { Value = "cherry", Text = "Cherry" }
+        };
             }
         }
     }
