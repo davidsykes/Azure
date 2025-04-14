@@ -1,27 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DatabaseAccess;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Data.SqlClient;
 
 namespace CheapFoodApp.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly AzureDatabaseAccess AzureDatabaseAccess;
 
         [BindProperty]
         public string SelectedFruit { get; set; } = "";
         public List<SelectListItem> FruitOptions { get; set; } = [];
         public bool CreateNewFood { get; set; }
+        [BindProperty]
+        public string InputText { get; set; }
+
+        public string Result { get; set; }
+        public bool isRunningOnAzure { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
+            AzureDatabaseAccess = new AzureDatabaseAccess();
         }
 
         public void OnGet()
         {
             Console.WriteLine("Here");
+            isRunningOnAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
+
 
             {
                 FruitOptions =
@@ -31,35 +40,23 @@ namespace CheapFoodApp.Pages
                     new SelectListItem { Value = "cherry", Text = "Cherry" }
                 ];
 
+                var dbEntries = AzureDatabaseAccess.GetTestData();
 
-                try
-                {
-                    string connectionString = "Server=tcp:cheapfooddbserver.database.windows.net,1433;Initial Catalog=CheapFoodDb;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
-                    var rows = new List<string>();
+                dbEntries.ForEach(m => 
+                FruitOptions.Add(
+    new SelectListItem
+    {
+        Value = m,
+        Text = m
+    }));
 
-                    using var conn = new SqlConnection(connectionString);
-                    conn.Open();
 
-                    var command = new SqlCommand("SELECT * FROM Persons", conn);
-                    using SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            rows.Add($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}");
-                        }
-                    }
-                }
-                catch(Exception ex)
-                {
-                    FruitOptions.Add(new SelectListItem { Value = "error", Text = ex.Message });
-                }
             }
         }
         public void OnPost()
         {
             CreateNewFood = true;
+            Result = InputText;
         }
     }
 }

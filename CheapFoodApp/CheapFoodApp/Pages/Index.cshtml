@@ -4,6 +4,9 @@
     ViewData["Title"] = "Home page";
 }
 
+
+<p>The value is: @Model.isRunningOnAzure</p>
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
@@ -30,6 +33,16 @@
 {
     <div>
                     <p>The value is: @Model.CreateNewFood</p>
+
+                        <form method="post">
+        <input type="text" name="InputText" />
+        <button type="submit">Submit</button>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Result))
+    {
+            <p>You submitted: <strong>@Model.Result</strong></p>
+    }
     </div>
 }
 
