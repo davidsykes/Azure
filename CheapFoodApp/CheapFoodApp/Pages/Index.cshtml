@@ -4,6 +4,41 @@
     ViewData["Title"] = "Home page";
 }
 
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active p-3 border border-top-0" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
+        <p>This is the Home tab content.</p>
+    </div>
+    <div class="tab-pane fade p-3 border border-top-0" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
+        <p>
+            <form method="post">
+    <button type="submit">Submit</button>
+</form>
+
+
+            @if (Model.CreateNewFood)
+{
+    <div>
+                    <p>The value is: @Model.CreateNewFood</p>
+    </div>
+}
+
+
+        </p>
+    </div>
+</div>
+
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
