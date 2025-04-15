@@ -3,11 +3,11 @@ using Microsoft.Data.SqlClient;
 
 namespace SQLDatabaseAccess
 {
-    public class AzureDatabaseAccess : IDatabaseAccess
+    public class AzureDatabaseAccess : IDatabaseAccessImplementation
     {
         readonly string _connectionString = "Server=tcp:cheapfooddbserver.database.windows.net,1433;Initial Catalog=CheapFoodDb;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
 
-        public bool TableExists(string name)
+        public List<string> GetTableNames()
         {
             var rows = new List<string>();
 
@@ -25,7 +25,7 @@ namespace SQLDatabaseAccess
                 }
             }
 
-            return rows.Contains(name);
+            return rows;
         }
 
         private static void TryOpenConnection(SqlConnection conn)

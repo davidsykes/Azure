@@ -7,7 +7,7 @@ namespace SQLiteDatabaseAccess
         public string name { get; set; } = "";
     }
 
-    public class TestDatabaseAccess : IDatabaseAccess
+    public class TestDatabaseAccess : IDatabaseAccessImplementation
     {
         readonly ISQLiteWrapper _wrapper;
 
@@ -23,11 +23,11 @@ namespace SQLiteDatabaseAccess
             return $"Data Source={databasePath}";
         }
 
-        public bool TableExists(string name)
+        public List<string> GetTableNames()
         {
             var tables = _wrapper.Select<Table>(null, "SELECT name FROM sqlite_master WHERE type='table';");
             var names = tables.Select(m => m.name);
-            return names.Contains(name);
+            return [.. names];
         }
 
         public void CreateFoodsTable()

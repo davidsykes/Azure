@@ -6,13 +6,13 @@ namespace DatabaseAccess
 {
     public class DatabaseAccessWrapper : IDatabaseAccess
     {
-        readonly IDatabaseAccess _databaseAccess;
+        readonly IDatabaseAccessImplementation _databaseAccess;
 
         public DatabaseAccessWrapper(bool IsRunningOnAzure)
         {
             _databaseAccess = IsRunningOnAzure ? new AzureDatabaseAccess() : new TestDatabaseAccess();
 
-            if (!_databaseAccess.TableExists("Foods"))
+            if (!TableExists("Foods"))
             {
                 CreateFoodsTable();
             }
@@ -36,7 +36,8 @@ namespace DatabaseAccess
 
         public bool TableExists(string name)
         {
-            throw new NotImplementedException();
+            var tables = _databaseAccess.GetTableNames();
+            return tables.Contains(name);
         }
     }
 }
