@@ -1,4 +1,5 @@
 ﻿using DatabaseAccess;
+using DatabaseAccessInterfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,7 +9,20 @@ namespace CheapFoodApp.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly AzureDatabaseAccess AzureDatabaseAccess;
+        private readonly IDatabaseAccess _databaseAccess;
+
+        public IndexModel(ILogger<IndexModel> logger)
+        {
+            _logger = logger;
+            _databaseAccess = new DatabaseAccessWrapper(IsRunningOnAzure);
+        }
+
+
+
+
+
+        // TOREMOVE
+
 
         [BindProperty]
         public string SelectedFruit { get; set; } = "";
@@ -20,19 +34,11 @@ namespace CheapFoodApp.Pages
         public string Result { get; set; }
         public bool isRunningOnAzure { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-            AzureDatabaseAccess = new AzureDatabaseAccess();
-        }
-
         public void OnGet()
         {
             Console.WriteLine("Here");
             isRunningOnAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
 
-
-            {
                 FruitOptions =
                 [
                     new SelectListItem { Value = "apple", Text = "Apple" },
@@ -40,23 +46,28 @@ namespace CheapFoodApp.Pages
                     new SelectListItem { Value = "cherry", Text = "Cherry" }
                 ];
 
-                var dbEntries = AzureDatabaseAccess.GetTestData();
+                var dbEntries = _databaseAccess.GetTestData();
 
-                dbEntries.ForEach(m => 
-                FruitOptions.Add(
-    new SelectListItem
-    {
-        Value = m,
-        Text = m
-    }));
-
-
-            }
+                dbEntries.ForEach(m =>
+                            FruitOptions.Add(
+                            new SelectListItem
+                            {
+                                Value = m,
+                                Text = m
+                            }));
         }
         public void OnPost()
         {
-            CreateNewFood = true;
+            var qq = Request.Form["new food"];
+                if (qq == "new_food")
+                {
+                    _databaseAccess.AddNewFood(InputText);
+            }
+
+                CreateNewFood = true;
             Result = InputText;
         }
+
+        private bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
     }
 }

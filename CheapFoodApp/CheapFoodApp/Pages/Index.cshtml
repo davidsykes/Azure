@@ -4,8 +4,52 @@
     ViewData["Title"] = "Home page";
 }
 
+<p>The value if isRunningOnAzure is: @Model.isRunningOnAzure</p>
 
-<p>The value is: @Model.isRunningOnAzure</p>
+
+
+
+@{
+    var activeTab = Request.Query["tab"].ToString() ?? "1";
+}
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link @(activeTab == "1" ? "active" : "")" href="?tab=1">Tab 1</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(activeTab == "2" ? "active" : "")" href="?tab=2">Foods</a>
+    </li>
+</ul>
+
+<div class="tab-content mt-3">
+    @if (activeTab == "1")
+    {
+        <div>
+            <p>Content for Tab 1</p>
+        </div>
+    }
+    else if (activeTab == "2")
+    {
+        <div>
+            <p>Content for Tab 2</p>
+
+            <form method="post">
+                <input type="text" name="InputText" />
+                <button type="submit" name="new food" value="new_food">Submit</button>
+            </form>
+
+        </div>
+    }
+</div>
+
+
+
+<hr>
+<hr>
+<hr>
+
+
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
@@ -14,7 +58,7 @@
     </li>
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Foods</button>
     </li>
 </ul>
 
@@ -22,11 +66,12 @@
     <div class="tab-pane fade show active p-3 border border-top-0" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
         <p>This is the Home tab content.</p>
     </div>
+
     <div class="tab-pane fade p-3 border border-top-0" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
         <p>
             <form method="post">
-    <button type="submit">Submit</button>
-</form>
+                <button type="submit">Submit</button>
+            </form>
 
 
             @if (Model.CreateNewFood)

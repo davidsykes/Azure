@@ -1,9 +1,20 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DatabaseAccessInterfaces;
+using Microsoft.Data.SqlClient;
 
-namespace DatabaseAccess
+namespace SQLDatabaseAccess
 {
-    public class AzureDatabaseAccess
+    public class AzureDatabaseAccess : IDatabaseAccess
     {
+        public void AddNewFood(string inputText)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateTable(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<string> GetTestData()
         {
             var rows = new List<string>();
@@ -31,6 +42,11 @@ namespace DatabaseAccess
             }
 
             return rows;
+        }
+
+        public bool TableExists(string v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

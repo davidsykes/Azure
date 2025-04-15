@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SQLDatabaseAccess\SQLDatabaseAccess.csproj" />
-    <ProjectReference Include="..\SQLiteDatabaseAccess\SQLiteDatabaseAccess.csproj" />
-  </ItemGroup>
-
 </Project>
