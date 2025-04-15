@@ -7,6 +7,10 @@
 <p>The value if isRunningOnAzure is: @Model.isRunningOnAzure</p>
 
 
+@if (Model.ErrorMessage != "")
+{
+    <div> BIG FAT ERROR @Model.ErrorMessage</div>
+}
 
 
 @{

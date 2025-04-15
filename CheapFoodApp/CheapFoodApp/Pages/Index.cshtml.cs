@@ -10,11 +10,20 @@ namespace CheapFoodApp.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IDatabaseAccess _databaseAccess;
+        public string ErrorMessage;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
-            _databaseAccess = new DatabaseAccessWrapper(IsRunningOnAzure);
+            try
+            {
+                _databaseAccess = new DatabaseAccessWrapper(IsRunningOnAzure);
+            }
+            catch (SQLiteLibraryException ex)
+            {
+                ErrorMessage = ex.Message;
+                _databaseAccess = new DummyDatabaseAccessWrapper();
+            }
         }
 
         private static bool IsRunningOnAzure => true; // !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));

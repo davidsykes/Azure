@@ -12,10 +12,10 @@ namespace DatabaseAccess
         {
             _databaseAccess = IsRunningOnAzure ? new AzureDatabaseAccess() : new TestDatabaseAccess();
 
-            //if (!_databaseAccess.TableExists("Foods"))
-            //{
-            //    CreateFoodsTable();
-            //}
+            if (!_databaseAccess.TableExists("Foods"))
+            {
+                CreateFoodsTable();
+            }
 
         }
 

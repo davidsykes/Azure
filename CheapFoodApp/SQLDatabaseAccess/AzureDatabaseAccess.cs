@@ -1,18 +1,19 @@
-﻿using DatabaseAccessInterfaces;
+﻿using DatabaseAccess.Library.Placeholders;
+using DatabaseAccessInterfaces;
 using Microsoft.Data.SqlClient;
 
 namespace SQLDatabaseAccess
 {
     public class AzureDatabaseAccess : IDatabaseAccess
     {
-        string connectionString = "Server=tcp:cheapfooddbserver.database.windows.net,1433;Initial Catalog=CheapFoodDb;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
+        readonly string _connectionString = "Server=tcp:cheapfooddbserver.database.windows.net,1433;Initial Catalog=CheapFoodDb;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
 
         public bool TableExists(string name)
         {
             var rows = new List<string>();
 
-            using var conn = new SqlConnection(connectionString);
-            conn.Open();
+            using var conn = new SqlConnection(_connectionString);
+            TryOpenConnection(conn);
 
             var command = new SqlCommand("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES", conn);
             using SqlDataReader reader = command.ExecuteReader();
@@ -21,19 +22,35 @@ namespace SQLDatabaseAccess
             {
                 while (reader.Read())
                 {
-                    rows.Add($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}");
+                    rows.Add(reader.GetString(0));
                 }
             }
 
             return rows.Contains(name);
         }
 
-        public void AddNewFood(string inputText)
+        private static void TryOpenConnection(SqlConnection conn)
+        {
+            try
+            {
+                conn.Open();
+            }
+            catch(Microsoft.Data.SqlClient.SqlException ex)
+            {
+                if (ex.Message.Contains("needs re-authentication"))
+                {
+                    throw new SQLiteLibraryException("Application needs re-authentication");
+                }
+                throw;
+            }
+        }
+
+        public void CreateFoodsTable()
         {
             throw new NotImplementedException();
         }
 
-        public void CreateFoodsTable()
+        public void AddNewFood(string inputText)
         {
             throw new NotImplementedException();
         }
@@ -43,7 +60,7 @@ namespace SQLDatabaseAccess
             var rows = new List<string>();
             try
             {
-                using var conn = new SqlConnection(connectionString);
+                using var conn = new SqlConnection(_connectionString);
                 conn.Open();
 
                 var command = new SqlCommand("SELECT * FROM Persons", conn);
