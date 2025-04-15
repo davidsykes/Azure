@@ -2,14 +2,44 @@
 
 namespace SQLiteDatabaseAccess
 {
+    class Table
+    {
+        public string name { get; set; } = "";
+    }
+
     public class TestDatabaseAccess : IDatabaseAccess
     {
-        public void AddNewFood(string inputText)
+        readonly ISQLiteWrapper _wrapper;
+
+        public TestDatabaseAccess()
         {
-            throw new NotImplementedException();
+            string databasePath = "D:\\TestData\\CheapFood.sql";
+
+            _wrapper = new SQLiteWrapper(CreateFileConnectionString(databasePath));
         }
 
-        public void CreateTable(string v)
+        private static string CreateFileConnectionString(string databasePath)
+        {
+            return $"Data Source={databasePath}";
+        }
+
+        public bool TableExists(string name)
+        {
+            var tables = _wrapper.Select<Table>(null, "SELECT name FROM sqlite_master WHERE type='table';");
+            var names = tables.Select(m => m.name);
+            return names.Contains(name);
+        }
+
+        public void CreateFoodsTable()
+        {
+            var t = _wrapper.CreateTransaction();
+            _wrapper.ExecuteNonQuery(
+                t,
+                "CREATE TABLE IF NOT EXISTS Foods(Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL);");
+            _wrapper.Commit(t);
+        }
+
+        public void AddNewFood(string inputText)
         {
             throw new NotImplementedException();
         }
@@ -17,11 +47,6 @@ namespace SQLiteDatabaseAccess
         public List<string> GetTestData()
         {
             return ["Testing", "The", "Database"];
-        }
-
-        public bool TableExists(string v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

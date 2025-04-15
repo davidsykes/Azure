@@ -17,6 +17,8 @@ namespace CheapFoodApp.Pages
             _databaseAccess = new DatabaseAccessWrapper(IsRunningOnAzure);
         }
 
+        private static bool IsRunningOnAzure => true; // !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
+
 
 
 
@@ -67,7 +69,5 @@ namespace CheapFoodApp.Pages
                 CreateNewFood = true;
             Result = InputText;
         }
-
-        private bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
     }
 }

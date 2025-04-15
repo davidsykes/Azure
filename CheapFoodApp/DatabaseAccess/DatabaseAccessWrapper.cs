@@ -12,11 +12,16 @@ namespace DatabaseAccess
         {
             _databaseAccess = IsRunningOnAzure ? new AzureDatabaseAccess() : new TestDatabaseAccess();
 
-            if (!_databaseAccess.TableExists("Foods"))
-            {
-                _databaseAccess.CreateTable("Foods");
-            }
+            //if (!_databaseAccess.TableExists("Foods"))
+            //{
+            //    CreateFoodsTable();
+            //}
 
+        }
+
+        public void CreateFoodsTable()
+        {
+            _databaseAccess.CreateFoodsTable();
         }
 
         public void AddNewFood(string inputText)
@@ -24,14 +29,9 @@ namespace DatabaseAccess
             throw new NotImplementedException();
         }
 
-        public void CreateTable(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<string> GetTestData()
         {
-            throw new NotImplementedException();
+            return _databaseAccess.GetTestData();
         }
 
         public bool TableExists(string name)
