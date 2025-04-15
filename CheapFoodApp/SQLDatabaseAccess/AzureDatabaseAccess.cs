@@ -1,5 +1,4 @@
-﻿using DatabaseAccess.Library.Placeholders;
-using DatabaseAccessInterfaces;
+﻿using DatabaseAccessInterfaces;
 using Microsoft.Data.SqlClient;
 
 namespace SQLDatabaseAccess
@@ -47,7 +46,17 @@ namespace SQLDatabaseAccess
 
         public void CreateFoodsTable()
         {
-            throw new NotImplementedException();
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+
+            string tableCommand = @"CREATE TABLE Foods (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Name TEXT NOT NULL);";
+
+            using (var command = new SqlCommand(tableCommand, conn))
+            {
+                command.ExecuteNonQuery();
+            }
         }
 
         public void AddNewFood(string inputText)

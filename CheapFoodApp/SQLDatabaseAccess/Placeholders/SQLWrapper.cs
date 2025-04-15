@@ -1,4 +1,5 @@
 ﻿using DatabaseAccessInterfaces;
+using Microsoft.Data.SqlClient;
 using System.Reflection;
 
 namespace DatabaseAccess.Library.Placeholders
@@ -145,7 +146,7 @@ namespace DatabaseAccess.Library.Placeholders
 
         #region Support Code
 
-        private SqliteCommand CreateCommand(string commandText, SQLiteTransactionWrapper? transaction)
+        private SqlCommand CreateCommand(string commandText, SQLiteTransactionWrapper? transaction)
         {
             throw new NotImplementedException();
             //return new SqliteCommand()
@@ -156,7 +157,7 @@ namespace DatabaseAccess.Library.Placeholders
             //};
         }
 
-        private static void AddParametersToCommand(SqliteCommand command, object? parameters)
+        private static void AddParametersToCommand(SqlCommand command, object? parameters)
         {
             if (parameters != null)
             {
@@ -171,14 +172,14 @@ namespace DatabaseAccess.Library.Placeholders
             }
         }
 
-        private static string? GetString(SqliteDataReader reader, int ordinal)
+        private static string? GetString(SqlDataReader reader, int ordinal)
         {
             if (reader.IsDBNull(ordinal))
                 return null;
             return reader.GetString(ordinal);
         }
 
-        private static DateTime GetDateTime(SqliteDataReader reader, int ordinal)
+        private static DateTime GetDateTime(SqlDataReader reader, int ordinal)
         {
             if (reader.IsDBNull(ordinal))
                 return DateTime.MinValue;
