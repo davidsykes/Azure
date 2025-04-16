@@ -59,9 +59,16 @@ namespace SQLDatabaseAccess
             }
         }
 
-        public void AddNewFood(string inputText)
+        public void AddNewFood(string name)
         {
-            throw new NotImplementedException();
+            var query = $"INSERT INTO Foods(Name) VALUES(@Name)";
+
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+
+            var command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@Name", name);
+            command.ExecuteNonQuery();
         }
 
         public List<string> GetTestData()

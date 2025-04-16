@@ -27,6 +27,7 @@ namespace CheapFoodApp.Pages
         }
 
         private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
+        //private static bool IsRunningOnAzure => true;
 
 
 
