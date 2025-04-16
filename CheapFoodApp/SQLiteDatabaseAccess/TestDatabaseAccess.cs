@@ -39,9 +39,16 @@ namespace SQLiteDatabaseAccess
             _wrapper.Commit(t);
         }
 
-        public void AddNewFood(string inputText)
+        public void AddNewFood(string name)
         {
-            throw new NotImplementedException();
+            var t = _wrapper.CreateTransaction();
+
+            var query = $"INSERT INTO Foods(Name) VALUES(@Name)";
+            _wrapper.ExecuteNonQuery(
+                t,
+                query,
+                new { Name = name});
+            _wrapper.Commit(t);
         }
 
         public List<string> GetTestData()

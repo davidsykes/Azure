@@ -4,7 +4,7 @@
     {
         bool TableExists(string name);
         void CreateFoodsTable();
-        void AddNewFood(string inputText);
+        void AddNewFood(string name);
         public List<string> GetTestData();
     }
 }

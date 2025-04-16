@@ -5,6 +5,7 @@ namespace DatabaseAccessInterfaces
     {
         List<string> GetTableNames();
         void CreateFoodsTable();
+        void AddNewFood(string name);
         List<string> GetTestData();
     }
 }

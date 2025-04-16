@@ -24,9 +24,9 @@ namespace DatabaseAccess
             _databaseAccess.CreateFoodsTable();
         }
 
-        public void AddNewFood(string inputText)
+        public void AddNewFood(string name)
         {
-            throw new NotImplementedException();
+            _databaseAccess.AddNewFood(name);
         }
 
         public List<string> GetTestData()

@@ -26,10 +26,21 @@ namespace CheapFoodApp.Pages
             }
         }
 
-        private static bool IsRunningOnAzure => true; // !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
+        private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
 
 
 
+        public void OnPost()
+        {
+            var qq = Request.Form["new food"];
+            if (qq == "new_food")
+            {
+                _databaseAccess.AddNewFood(InputText);
+            }
+
+            CreateNewFood = true;
+            Result = InputText;
+        }
 
 
         // TOREMOVE
@@ -66,17 +77,6 @@ namespace CheapFoodApp.Pages
                                 Value = m,
                                 Text = m
                             }));
-        }
-        public void OnPost()
-        {
-            var qq = Request.Form["new food"];
-                if (qq == "new_food")
-                {
-                    _databaseAccess.AddNewFood(InputText);
-            }
-
-                CreateNewFood = true;
-            Result = InputText;
         }
     }
 }
