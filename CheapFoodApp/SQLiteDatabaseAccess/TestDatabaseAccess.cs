@@ -39,7 +39,7 @@ namespace SQLiteDatabaseAccess
             _wrapper.Commit(t);
         }
 
-        public void AddNewFood(string name)
+        public void AddNewFood(DatabaseString name)
         {
             var t = _wrapper.CreateTransaction();
 
@@ -47,8 +47,20 @@ namespace SQLiteDatabaseAccess
             _wrapper.ExecuteNonQuery(
                 t,
                 query,
-                new { Name = name});
+                new { Name = name.ToString()});
             _wrapper.Commit(t);
+        }
+        class FoodStuff
+        {
+            public string? Name { get; set; }
+        }
+
+        public List<string> GetFoodItems()
+        {
+
+            var foodItems = _wrapper.Select<FoodStuff>(null, "SELECT NAME FROM FOODS");
+
+            return foodItems.Select(f => f.Name!).ToList();
         }
 
         public List<string> GetTestData()

@@ -10,7 +10,8 @@ namespace CheapFoodApp.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IDatabaseAccess _databaseAccess;
-        public string ErrorMessage;
+        public string? ErrorMessage;
+        public List<string> FoodItems;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -24,10 +25,12 @@ namespace CheapFoodApp.Pages
                 ErrorMessage = ex.Message;
                 _databaseAccess = new DummyDatabaseAccessWrapper();
             }
+
+            FoodItems = _databaseAccess.GetFoodItems();
         }
 
-        private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
-        //private static bool IsRunningOnAzure => true;
+        //private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
+        private static bool IsRunningOnAzure => true;
 
 
 

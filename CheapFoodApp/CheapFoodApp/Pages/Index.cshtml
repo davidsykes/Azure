@@ -14,12 +14,14 @@
 
 
 @{
+    <div> activeTab @Request.Query["tab"]</div>
     var activeTab = Request.Query["tab"].ToString() ?? "1";
+    <div> activeTab @activeTab</div>
 }
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link @(activeTab == "1" ? "active" : "")" href="?tab=1">Tab 1</a>
+        <a class="nav-link @(activeTab == "1" ? "active" : "")" href="?tab=1">Shop</a>
     </li>
     <li class="nav-item">
         <a class="nav-link @(activeTab == "2" ? "active" : "")" href="?tab=2">Foods</a>
@@ -31,6 +33,14 @@
     {
         <div>
             <p>Content for Tab 1</p>
+            <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                <ul>
+                    @foreach (var item in Model.FoodItems)
+                    {
+                        <li>@item</li>
+                    }
+                </ul>
+            </div>
         </div>
     }
     else if (activeTab == "2")

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.35821.62 d17.14
+VisualStudioVersion = 17.14.35821.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheapFoodApp", "CheapFoodApp\CheapFoodApp.csproj", "{39B187CD-7CB7-463B-82B7-62F1565F8408}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLiteDatabaseAccess", "SQLiteDatabaseAccess\SQLiteDatabaseAccess.csproj", "{B6B52A03-F6F8-49C0-B764-B1BAC3B176C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAccessInterfaces", "DatabaseAccessInterfaces\DatabaseAccessInterfaces.csproj", "{A532C64D-C61E-4B50-A39C-99A7D402EB20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A532C64D-C61E-4B50-A39C-99A7D402EB20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A532C64D-C61E-4B50-A39C-99A7D402EB20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A532C64D-C61E-4B50-A39C-99A7D402EB20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

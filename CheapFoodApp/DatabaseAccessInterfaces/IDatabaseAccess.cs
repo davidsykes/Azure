@@ -6,5 +6,6 @@
         void CreateFoodsTable();
         void AddNewFood(string name);
         public List<string> GetTestData();
+        List<string> GetFoodItems();
     }
 }

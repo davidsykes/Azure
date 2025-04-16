@@ -12,6 +12,11 @@ namespace DatabaseAccess
         {
         }
 
+        public List<string> GetFoodItems()
+        {
+            return GetTestData();
+        }
+
         public List<string> GetTestData()
         {
             return ["Dummy", "data"];

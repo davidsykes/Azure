@@ -59,7 +59,7 @@ namespace SQLDatabaseAccess
             }
         }
 
-        public void AddNewFood(string name)
+        public void AddNewFood(DatabaseString name)
         {
             var query = $"INSERT INTO Foods(Name) VALUES(@Name)";
 
@@ -67,8 +67,29 @@ namespace SQLDatabaseAccess
             conn.Open();
 
             var command = new SqlCommand(query, conn);
-            command.Parameters.AddWithValue("@Name", name);
+            command.Parameters.AddWithValue("@Name", name.ToString());
             command.ExecuteNonQuery();
+        }
+
+        public List<string> GetFoodItems()
+        {
+            var foodItems = new List<string>();
+
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+
+            var command = new SqlCommand("SELECT Name FROM Foods", conn);
+            using SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    foodItems.Add(reader.GetString(0));
+                }
+            }
+
+            return foodItems;
         }
 
         public List<string> GetTestData()
