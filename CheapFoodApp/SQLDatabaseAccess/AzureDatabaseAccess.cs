@@ -78,15 +78,27 @@ namespace SQLDatabaseAccess
             command.ExecuteNonQuery();
         }
 
-        public List<FoodItem> GetFoodItems()
+        public List<T> Query<T>(string query) where T : new()
         {
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
             ISQLiteWrapper _wrapper = new SQLiteWrapper(new AzureDBConnection(conn));
 
-            var foodItems = _wrapper.Select<FoodItem>(null, "SELECT Id, Name FROM FOODS");
+            var foodItems = _wrapper.Select<T>(null, query);
 
             return foodItems;
+        }
+
+        public void AddNewSupermarket(DatabaseString name)
+        {
+            var query = $"INSERT INTO Supermarkets(Name) VALUES(@Name)";
+
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+
+            var command = new SqlCommand(query, conn);
+            command.Parameters.AddWithValue("@Name", name.ToString());
+            command.ExecuteNonQuery();
         }
 
         public List<string> GetTestData()

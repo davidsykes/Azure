@@ -1,6 +1,6 @@
-﻿namespace DatabaseAccessInterfaces
+﻿namespace DatabaseAccessInterfaces.DatabaseObjects
 {
-    public class FoodItem
+    public class Supermarket
     {
         public int Id { get; set; }
         public string? Name { get; set; }

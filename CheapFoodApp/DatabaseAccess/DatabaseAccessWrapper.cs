@@ -1,4 +1,5 @@
 ﻿using DatabaseAccessInterfaces;
+using DatabaseAccessInterfaces.DatabaseObjects;
 using SQLDatabaseAccess;
 using SQLiteDatabaseAccess;
 
@@ -37,7 +38,19 @@ namespace DatabaseAccess
 
         public List<FoodItem> GetFoodItems()
         {
-            return _databaseAccess.GetFoodItems();
+            var query = "SELECT Id, Name FROM FOODS";
+            return _databaseAccess.Query<FoodItem>(query);
+        }
+
+        public void AddNewSupermarket(string name)
+        {
+            _databaseAccess.AddNewSupermarket(new DatabaseString(name));
+        }
+
+        public List<Supermarket> GetSupermarkets()
+        {
+            var query = "SELECT Id, Name FROM SUPERMARKETS";
+            return _databaseAccess.Query<Supermarket>(query);
         }
 
         public List<string> GetTestData()

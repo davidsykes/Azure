@@ -1,4 +1,5 @@
 ﻿using DatabaseAccessInterfaces;
+using DatabaseAccessInterfaces.DatabaseObjects;
 
 namespace SQLiteDatabaseAccess
 {
@@ -51,12 +52,24 @@ namespace SQLiteDatabaseAccess
             _wrapper.Commit(t);
         }
 
-        public List<FoodItem> GetFoodItems()
+        public List<T> Query<T>(string query) where T : new()
         {
-            var foodItems = _wrapper.Select<FoodItem>(null, "SELECT Id, Name FROM FOODS");
+            var foodItems = _wrapper.Select<T>(null, query);
 
             return foodItems;
         }
+
+        public void AddNewSupermarket(DatabaseString name)
+        {
+            var t = _wrapper.CreateTransaction();
+
+            var query = $"INSERT INTO Supermarkets(Name) VALUES(@Name)";
+            _wrapper.ExecuteNonQuery(
+                t,
+                query,
+                new { Name = name.ToString() });
+        }
+
 
         public List<string> GetTestData()
         {

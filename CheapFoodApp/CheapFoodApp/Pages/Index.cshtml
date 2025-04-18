@@ -10,11 +10,8 @@
 }
 
 @{
-    <div> activeTab @Request.Query["tab"]</div>
     var activeTab = Request.Query["tab"].ToString() ?? "1";
-    <div> activeTab @activeTab</div>
     var activeFood = Request.Query["food"].ToString();
-    <div> activeFood @activeFood</div>
 }
 
 <ul class="nav nav-tabs">
@@ -24,12 +21,23 @@
     <li class="nav-item">
         <a class="nav-link @(activeTab == "2" ? "active" : "")" href="?tab=2">Foods</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link @(activeTab == "3" ? "active" : "")" href="?tab=3">Supermarkets</a>
+    </li>
 </ul>
 
 <div class="tab-content mt-3">
     @if (activeFood != "")
     {
         <p>Edit food @activeFood</p>
+
+        <select id="fruits" name="fruits">
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="orange">Orange</option>
+            <option value="mango">Mango</option>
+        </select>
+
     }
     @if (activeTab == "1" || activeTab == "")
     {
@@ -52,7 +60,19 @@
 
             <form method="post">
                 <input type="text" name="InputText" />
-                <button type="submit" name="new food" value="new_food">Submit</button>
+                <button type="submit" name="edit_command" value="new_food">Submit</button>
+            </form>
+
+        </div>
+    }
+    else if (activeTab == "3")
+    {
+        <div>
+            <p>Supermarkets</p>
+
+            <form method="post">
+                <input type="text" name="InputText" />
+                <button type="submit" name="edit_command" value="new_supermarket">Submit</button>
             </form>
 
         </div>

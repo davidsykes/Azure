@@ -1,5 +1,6 @@
 ﻿using DatabaseAccess;
 using DatabaseAccessInterfaces;
+using DatabaseAccessInterfaces.DatabaseObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -36,10 +37,14 @@ namespace CheapFoodApp.Pages
 
         public void OnPost()
         {
-            var qq = Request.Form["new food"];
-            if (qq == "new_food")
+            var edit_command = Request.Form["new edit_command"];
+            if (edit_command == "new_food")
             {
                 _databaseAccess.AddNewFood(InputText);
+            }
+            else if (edit_command == "new_supermarket")
+            {
+                _databaseAccess.AddNewSupermarket(InputText);
             }
 
             CreateNewFood = true;
