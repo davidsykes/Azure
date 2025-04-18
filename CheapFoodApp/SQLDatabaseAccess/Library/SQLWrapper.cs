@@ -1,25 +1,25 @@
-﻿using DatabaseAccessInterfaces;
+﻿using DatabaseAccess.Library.Placeholders;
+using DatabaseAccessInterfaces;
 using Microsoft.Data.SqlClient;
 using System.Reflection;
 
-namespace DatabaseAccess.Library.Placeholders
+namespace SQLDatabaseAccess.Library
 {
     internal class SQLiteWrapper : ISQLiteWrapper, IDisposable
     {
-        readonly SqliteConnection _connection;
+        readonly IDBConnection _connection;
 
         public event LogSQLiteCommandDelegate? LogSQLiteCommandEvent;
 
         #region Public Methods
 
-        public SQLiteWrapper(string connectionString)
+        public SQLiteWrapper(IDBConnection connection)
         {
-            _connection = new SqliteConnection(connectionString);
-            _connection.Open();
+            _connection = connection;
         }
 
         public List<T> Select<T>(
-            SQLiteTransactionWrapper? transaction,
+            IDBTransaction? transaction,
             string query,
             string? where,
             object? parameters) where T : new()
@@ -117,7 +117,7 @@ namespace DatabaseAccess.Library.Placeholders
         }
 
         public int ExecuteNonQuery(
-            SQLiteTransactionWrapper? transaction, string command, object? parameters)
+            IDBTransaction? transaction, string command, object? parameters)
         {
             RaiseLogSQLiteCommandEvent(command, parameters);
             var sCommand = CreateCommand(command, transaction);
@@ -126,7 +126,7 @@ namespace DatabaseAccess.Library.Placeholders
         }
 
         public long ExecuteScalar(
-            SQLiteTransactionWrapper transaction, string command, object? parameters = null)
+            IDBTransaction transaction, string command, object? parameters = null)
         {
             ExecuteNonQuery(transaction, command, parameters);
 
@@ -146,15 +146,9 @@ namespace DatabaseAccess.Library.Placeholders
 
         #region Support Code
 
-        private SqlCommand CreateCommand(string commandText, SQLiteTransactionWrapper? transaction)
+        private SqlCommand CreateCommand(string commandText, IDBTransaction? transaction)
         {
-            throw new NotImplementedException();
-            //return new SqliteCommand()
-            //{
-            //    Connection = _connection,
-            //    CommandText = commandText,
-            //    Transaction = transaction?.SqliteTransaction
-            //};
+            return _connection.CreateCommand(commandText, transaction);
         }
 
         private static void AddParametersToCommand(SqlCommand command, object? parameters)
@@ -186,19 +180,19 @@ namespace DatabaseAccess.Library.Placeholders
             return reader.GetDateTime(ordinal);
         }
 
-        public SQLiteTransactionWrapper CreateTransaction()
+        public IDBTransaction CreateTransaction()
         {
-            return new SQLiteTransactionWrapper(_connection.BeginTransaction());
+            return _connection.BeginTransaction();
         }
 
-        public void Commit(SQLiteTransactionWrapper transaction)
+        public void Commit(IDBTransaction transaction)
         {
-            transaction.SqliteTransaction.Commit();
+            transaction.Commit();
         }
 
-        public void Rollback(SQLiteTransactionWrapper transaction)
+        public void Rollback(IDBTransaction transaction)
         {
-            transaction.SqliteTransaction.Rollback();
+            transaction.Rollback();
         }
 
         private void RaiseLogSQLiteCommandEvent(string command, object? parameters)

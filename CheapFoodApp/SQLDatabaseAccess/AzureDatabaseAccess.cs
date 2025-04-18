@@ -1,11 +1,14 @@
 ﻿using DatabaseAccessInterfaces;
 using Microsoft.Data.SqlClient;
+using SQLDatabaseAccess.AzureImplementations;
+using SQLDatabaseAccess.Library;
 
 namespace SQLDatabaseAccess
 {
     public class AzureDatabaseAccess : IDatabaseAccessImplementation
     {
         readonly string _connectionString = "Server=tcp:cheapfooddbserver.database.windows.net,1433;Initial Catalog=CheapFoodDb;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
+        //private ISQLiteWrapper? _wrapper;
 
         public List<string> GetTableNames()
         {
@@ -40,6 +43,10 @@ namespace SQLDatabaseAccess
                 {
                     throw new SQLiteLibraryException("Application needs re-authentication");
                 }
+                if (ex.Message.Contains("Connection Timeout Expired"))
+                {
+                    throw new SQLiteLibraryException("Connection Timeout Expired");
+                }
                 throw;
             }
         }
@@ -71,25 +78,21 @@ namespace SQLDatabaseAccess
             command.ExecuteNonQuery();
         }
 
+        class FoodStuff
+        {
+            public int Id { get; set; }
+            public string? Name { get; set; }
+        }
+
         public List<string> GetFoodItems()
         {
-            var foodItems = new List<string>();
-
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
+            ISQLiteWrapper _wrapper = new SQLiteWrapper(new AzureDBConnection(conn));
 
-            var command = new SqlCommand("SELECT Name FROM Foods", conn);
-            using SqlDataReader reader = command.ExecuteReader();
+            var foodItems = _wrapper.Select<FoodStuff>(null, "SELECT Id, Name FROM FOODS");
 
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    foodItems.Add(reader.GetString(0));
-                }
-            }
-
-            return foodItems;
+            return [.. foodItems.Select(f => f.Name!)];
         }
 
         public List<string> GetTestData()

@@ -9,7 +9,7 @@ namespace SQLiteDatabaseAccess
 
     public class TestDatabaseAccess : IDatabaseAccessImplementation
     {
-        readonly ISQLiteWrapper _wrapper;
+        private readonly ISQLiteWrapper _wrapper;
 
         public TestDatabaseAccess()
         {
@@ -50,6 +50,7 @@ namespace SQLiteDatabaseAccess
                 new { Name = name.ToString()});
             _wrapper.Commit(t);
         }
+
         class FoodStuff
         {
             public string? Name { get; set; }
@@ -57,10 +58,9 @@ namespace SQLiteDatabaseAccess
 
         public List<string> GetFoodItems()
         {
-
             var foodItems = _wrapper.Select<FoodStuff>(null, "SELECT NAME FROM FOODS");
 
-            return foodItems.Select(f => f.Name!).ToList();
+            return [.. foodItems.Select(f => f.Name!)];
         }
 
         public List<string> GetTestData()

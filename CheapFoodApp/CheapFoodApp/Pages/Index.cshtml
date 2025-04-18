@@ -13,6 +13,8 @@
     <div> activeTab @Request.Query["tab"]</div>
     var activeTab = Request.Query["tab"].ToString() ?? "1";
     <div> activeTab @activeTab</div>
+    var activeFood = Request.Query["food"].ToString();
+    <div> activeFood @activeFood</div>
 }
 
 <ul class="nav nav-tabs">
@@ -25,7 +27,11 @@
 </ul>
 
 <div class="tab-content mt-3">
-    @if (activeTab == "1")
+    @if (activeFood != "")
+    {
+        <p>Edit food @activeFood</p>
+    }
+    @if (activeTab == "1" || activeTab == "")
     {
         <div>
             <p>Content for Tab 1</p>
