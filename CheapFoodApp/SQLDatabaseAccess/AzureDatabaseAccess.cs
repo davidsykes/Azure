@@ -78,21 +78,15 @@ namespace SQLDatabaseAccess
             command.ExecuteNonQuery();
         }
 
-        class FoodStuff
-        {
-            public int Id { get; set; }
-            public string? Name { get; set; }
-        }
-
-        public List<string> GetFoodItems()
+        public List<FoodItem> GetFoodItems()
         {
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
             ISQLiteWrapper _wrapper = new SQLiteWrapper(new AzureDBConnection(conn));
 
-            var foodItems = _wrapper.Select<FoodStuff>(null, "SELECT Id, Name FROM FOODS");
+            var foodItems = _wrapper.Select<FoodItem>(null, "SELECT Id, Name FROM FOODS");
 
-            return [.. foodItems.Select(f => f.Name!)];
+            return foodItems;
         }
 
         public List<string> GetTestData()

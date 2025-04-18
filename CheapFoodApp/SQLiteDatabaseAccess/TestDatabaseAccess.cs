@@ -51,16 +51,11 @@ namespace SQLiteDatabaseAccess
             _wrapper.Commit(t);
         }
 
-        class FoodStuff
+        public List<FoodItem> GetFoodItems()
         {
-            public string? Name { get; set; }
-        }
+            var foodItems = _wrapper.Select<FoodItem>(null, "SELECT Id, Name FROM FOODS");
 
-        public List<string> GetFoodItems()
-        {
-            var foodItems = _wrapper.Select<FoodStuff>(null, "SELECT NAME FROM FOODS");
-
-            return [.. foodItems.Select(f => f.Name!)];
+            return foodItems;
         }
 
         public List<string> GetTestData()

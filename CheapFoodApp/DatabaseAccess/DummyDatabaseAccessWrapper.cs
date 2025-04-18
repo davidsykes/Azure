@@ -12,9 +12,9 @@ namespace DatabaseAccess
         {
         }
 
-        public List<string> GetFoodItems()
+        public List<FoodItem> GetFoodItems()
         {
-            return GetTestData();
+            return GetTestData().Select(m => new FoodItem { Id = 1, Name = m }).ToList();
         }
 
         public List<string> GetTestData()

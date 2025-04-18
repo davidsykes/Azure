@@ -11,7 +11,7 @@ namespace CheapFoodApp.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IDatabaseAccess _databaseAccess;
         public string? ErrorMessage;
-        public List<string> FoodItems;
+        public List<FoodItem> FoodItems;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -77,9 +77,6 @@ namespace CheapFoodApp.Pages
 
         public void OnGet()
         {
-            //Console.WriteLine("Here");
-            //isRunningOnAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
-
             FruitOptions =
             [
                 new SelectListItem { Value = "apple", Text = "Apple" },

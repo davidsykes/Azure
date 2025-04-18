@@ -35,7 +35,7 @@ namespace DatabaseAccess
             _databaseAccess.AddNewFood(new DatabaseString(name));
         }
 
-        public List<string> GetFoodItems()
+        public List<FoodItem> GetFoodItems()
         {
             return _databaseAccess.GetFoodItems();
         }

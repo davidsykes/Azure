@@ -1,12 +1,11 @@
-﻿
-namespace DatabaseAccessInterfaces
+﻿namespace DatabaseAccessInterfaces
 {
     public interface IDatabaseAccessImplementation
     {
         List<string> GetTableNames();
         void CreateFoodsTable();
         void AddNewFood(DatabaseString name);
-        List<string> GetFoodItems();
+        List<FoodItem> GetFoodItems();
         List<string> GetTestData();
     }
 }

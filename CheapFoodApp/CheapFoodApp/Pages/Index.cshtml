@@ -39,7 +39,7 @@
                 <ul>
                     @foreach (var item in Model.FoodItems)
                     {
-                                <li><a href="?food=1">@item</a></li>
+                        <li><a href="?food=@item.Id">@item.Name</a></li>
                     }
                 </ul>
             </div>
