@@ -4,14 +4,10 @@
     ViewData["Title"] = "Home page";
 }
 
-<p>The value if isRunningOnAzure is: @Model.isRunningOnAzure</p>
-
-
 @if (Model.ErrorMessage is not null)
 {
     <div> BIG FAT ERROR @Model.ErrorMessage</div>
 }
-
 
 @{
     <div> activeTab @Request.Query["tab"]</div>
@@ -37,7 +33,7 @@
                 <ul>
                     @foreach (var item in Model.FoodItems)
                     {
-                        <li>@item</li>
+                                <li><a href="?food=1">@item</a></li>
                     }
                 </ul>
             </div>

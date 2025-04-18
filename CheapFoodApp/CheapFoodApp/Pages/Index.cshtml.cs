@@ -29,8 +29,8 @@ namespace CheapFoodApp.Pages
             FoodItems = _databaseAccess.GetFoodItems();
         }
 
-        //private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
-        private static bool IsRunningOnAzure => true;
+        private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
+        //private static bool IsRunningOnAzure => true;
 
 
 
@@ -50,6 +50,22 @@ namespace CheapFoodApp.Pages
         // TOREMOVE
 
 
+
+
+        [BindProperty]
+        public List<string> SelectedItems { get; set; } = new();
+
+        public List<SelectListItem> ItemList { get; set; } = new();
+
+
+
+
+
+
+
+
+
+
         [BindProperty]
         public string SelectedFruit { get; set; } = "";
         public List<SelectListItem> FruitOptions { get; set; } = [];
@@ -58,29 +74,28 @@ namespace CheapFoodApp.Pages
         public string InputText { get; set; }
 
         public string Result { get; set; }
-        public bool isRunningOnAzure { get; set; }
 
         public void OnGet()
         {
-            Console.WriteLine("Here");
-            isRunningOnAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
+            //Console.WriteLine("Here");
+            //isRunningOnAzure = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
 
-                FruitOptions =
-                [
-                    new SelectListItem { Value = "apple", Text = "Apple" },
+            FruitOptions =
+            [
+                new SelectListItem { Value = "apple", Text = "Apple" },
                     new SelectListItem { Value = "banana", Text = "Banana" },
                     new SelectListItem { Value = "cherry", Text = "Cherry" }
-                ];
+            ];
 
-                var dbEntries = _databaseAccess.GetTestData();
+            var dbEntries = _databaseAccess.GetTestData();
 
-                dbEntries.ForEach(m =>
-                            FruitOptions.Add(
-                            new SelectListItem
-                            {
-                                Value = m,
-                                Text = m
-                            }));
+            dbEntries.ForEach(m =>
+                        FruitOptions.Add(
+                        new SelectListItem
+                        {
+                            Value = m,
+                            Text = m
+                        }));
         }
     }
 }
