@@ -16,6 +16,16 @@ namespace CheapFoodApp.Pages
         public List<Supermarket> Supermarkets;
         public FoodBeingEdited? FoodBeingEdited;
 
+        [BindProperty]
+        public string InputText { get; set; } = "";
+
+        [BindProperty]
+        public string SelectedAddPriceSupermarket { get; set; } = "";
+        [BindProperty]
+        public string AddPriceQuantity { get; set; } = "";
+        [BindProperty]
+        public string AddPricePrice { get; set; } = "";
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
@@ -54,8 +64,6 @@ namespace CheapFoodApp.Pages
                 return Redirect("/");
             }
 
-            CreateNewFood = true;
-            Result = InputText;
             return Page();
         }
 
@@ -70,33 +78,32 @@ namespace CheapFoodApp.Pages
             FoodBeingEdited = new FoodBeingEdited(id, _databaseAccess);
         }
 
-        // TOREMOVE
+        public IActionResult OnPostAddFoodPrice()
+        {
+            _databaseAccess.AddPrice(
+                FoodBeingEdited.Id,
+                StringToInt(SelectedAddPriceSupermarket),
+                StringToDouble(AddPriceQuantity),
+                StringToDouble(AddPricePrice));
+            return RedirectToPage("Index"); // Example
+        }
+
+        static int StringToInt(string s)
+        {
+            return int.Parse(s);
+        }
+
+        static double StringToDouble(string s)
+        {
+            return double.Parse(s);
+        }
 
 
 
-
-        [BindProperty]
-        public List<string> SelectedItems { get; set; } = [];
-
-        public List<SelectListItem> ItemList { get; set; } = [];
-
-
-
-
-
-
-
-
-        public bool CreateNewFood { get; set; }
-        [BindProperty]
-        public string InputText { get; set; }
-
-        public string Result { get; set; }
 
         public void OnGet()
         {
 
-            var dbEntries = _databaseAccess.GetTestData();
         }
     }
 }

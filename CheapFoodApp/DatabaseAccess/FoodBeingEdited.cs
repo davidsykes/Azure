@@ -16,5 +16,7 @@ namespace DatabaseAccess
         }
 
         public string Name => _foodItem.Name;
+
+        public int Id => _foodItem.Id;
     }
 }

@@ -62,5 +62,10 @@ namespace DatabaseAccess
         {
             return _databaseAccess.GetTestData();
         }
+
+        public void AddPrice(int foodId, int supermarketId, double quantity, double price)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

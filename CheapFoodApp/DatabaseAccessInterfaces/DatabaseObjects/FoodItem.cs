@@ -1,4 +1,5 @@
-﻿namespace DatabaseAccessInterfaces.DatabaseObjects
+﻿#nullable disable
+namespace DatabaseAccessInterfaces.DatabaseObjects
 {
     public class FoodItem
     {

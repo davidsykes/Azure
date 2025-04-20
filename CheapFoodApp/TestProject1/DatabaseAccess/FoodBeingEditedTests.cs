@@ -14,6 +14,14 @@ namespace TestProject1.DatabaseAccess
         FoodItem _foodItem;
 
         [Test]
+        public void TheFoodBeingEditedStoresTheFoodId()
+        {
+            var fbe = new FoodBeingEdited(5, _mockDatabaseAccess.Object);
+
+            fbe.Id.Should().Be(5);
+        }
+
+        [Test]
         public void TheFoodBeingEditedRetrievesTheNameOfTheFool()
         {
             var fbe = new FoodBeingEdited(5, _mockDatabaseAccess.Object);

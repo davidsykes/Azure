@@ -37,5 +37,9 @@ namespace DatabaseAccess
         {
             return true;
         }
+
+        public void AddPrice(int foodId, int supermarketId, double quantity, double price)
+        {
+        }
     }
 }
