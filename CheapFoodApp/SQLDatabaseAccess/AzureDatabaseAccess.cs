@@ -56,14 +56,21 @@ namespace SQLDatabaseAccess
             using var conn = new SqlConnection(_connectionString);
             conn.Open();
 
-            string tableCommand = @"CREATE TABLE Foods (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Name TEXT NOT NULL);";
+            string tableCommand = @"CREATE TABLE Foods (Id INT IDENTITY(1,1) PRIMARY KEY, Name TEXT NOT NULL);";
 
-            using (var command = new SqlCommand(tableCommand, conn))
-            {
-                command.ExecuteNonQuery();
-            }
+            using var command = new SqlCommand(tableCommand, conn);
+            command.ExecuteNonQuery();
+        }
+
+        public void CreateSupermarketsTable()
+        {
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+
+            string tableCommand = @"CREATE TABLE Supermarkets (Id INT IDENTITY(1,1) PRIMARY KEY, Name TEXT NOT NULL);";
+
+            using var command = new SqlCommand(tableCommand, conn);
+            command.ExecuteNonQuery();
         }
 
         public void AddNewFood(DatabaseString name)

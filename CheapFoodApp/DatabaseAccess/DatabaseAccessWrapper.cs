@@ -15,7 +15,12 @@ namespace DatabaseAccess
 
             if (!TableExists("Foods"))
             {
-                CreateFoodsTable();
+                _databaseAccess.CreateFoodsTable();
+            }
+
+            if (!TableExists("Supermarkets"))
+            {
+                _databaseAccess.CreateSupermarketsTable();
             }
 
         }
@@ -25,12 +30,6 @@ namespace DatabaseAccess
             var tables = _databaseAccess.GetTableNames();
             return tables.Contains(name);
         }
-
-        public void CreateFoodsTable()
-        {
-            _databaseAccess.CreateFoodsTable();
-        }
-
         public void AddNewFood(string name)
         {
             _databaseAccess.AddNewFood(new DatabaseString(name));

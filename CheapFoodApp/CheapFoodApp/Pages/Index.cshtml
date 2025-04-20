@@ -63,6 +63,11 @@
                 <button type="submit" name="edit_command" value="new_food">Submit</button>
             </form>
 
+            @foreach (var item in Model.FoodItems)
+            {
+                <p>@item.Name</p>
+            }
+
         </div>
     }
     else if (activeTab == "3")
@@ -74,6 +79,11 @@
                 <input type="text" name="InputText" />
                 <button type="submit" name="edit_command" value="new_supermarket">Submit</button>
             </form>
+
+            @foreach (var item in Model.Supermarkets)
+            {
+                <p>@item.Name</p>
+            }
 
         </div>
     }

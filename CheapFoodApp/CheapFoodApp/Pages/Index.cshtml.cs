@@ -13,6 +13,7 @@ namespace CheapFoodApp.Pages
         private readonly IDatabaseAccess _databaseAccess;
         public string? ErrorMessage;
         public List<FoodItem> FoodItems;
+        public List<Supermarket> Supermarkets;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -28,6 +29,7 @@ namespace CheapFoodApp.Pages
             }
 
             FoodItems = _databaseAccess.GetFoodItems();
+            Supermarkets = _databaseAccess.GetSupermarkets();
         }
 
         private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
@@ -35,20 +37,24 @@ namespace CheapFoodApp.Pages
 
 
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            var edit_command = Request.Form["new edit_command"];
+            var edit_command = Request.Form["edit_command"];
             if (edit_command == "new_food")
             {
                 _databaseAccess.AddNewFood(InputText);
+                FoodItems = _databaseAccess.GetFoodItems();
+                return Redirect("/");
             }
             else if (edit_command == "new_supermarket")
             {
                 _databaseAccess.AddNewSupermarket(InputText);
+                Supermarkets = _databaseAccess.GetSupermarkets();
             }
 
             CreateNewFood = true;
             Result = InputText;
+            return Page();
         }
 
 

@@ -7,8 +7,9 @@ namespace DatabaseAccessInterfaces
         List<string> GetTableNames();
         void CreateFoodsTable();
         void AddNewFood(DatabaseString name);
-        List<T> Query<T>(string query) where T : new();
+        void CreateSupermarketsTable();
         void AddNewSupermarket(DatabaseString databaseString);
+        List<T> Query<T>(string query) where T : new();
 
         List<string> GetTestData();
     }

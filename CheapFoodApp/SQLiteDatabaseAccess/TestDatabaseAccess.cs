@@ -40,6 +40,15 @@ namespace SQLiteDatabaseAccess
             _wrapper.Commit(t);
         }
 
+        public void CreateSupermarketsTable()
+        {
+            var t = _wrapper.CreateTransaction();
+            _wrapper.ExecuteNonQuery(
+                t,
+                "CREATE TABLE IF NOT EXISTS Supermarkets(Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL);");
+            _wrapper.Commit(t);
+        }
+
         public void AddNewFood(DatabaseString name)
         {
             var t = _wrapper.CreateTransaction();
@@ -68,6 +77,7 @@ namespace SQLiteDatabaseAccess
                 t,
                 query,
                 new { Name = name.ToString() });
+            _wrapper.Commit(t);
         }
 
 
