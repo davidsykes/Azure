@@ -13,13 +13,14 @@ namespace DatabaseAccess
         {
         }
 
-        public void CreateFoodsTable()
-        {
-        }
-
         public List<FoodItem> GetFoodItems()
         {
             return [.. GetTestData().Select(m => new FoodItem { Id = 1, Name = m })];
+        }
+
+        public FoodItem GetFoodItem(int id)
+        {
+            return new FoodItem { Id = 1, Name = "Food" };
         }
 
         public List<Supermarket> GetSupermarkets()

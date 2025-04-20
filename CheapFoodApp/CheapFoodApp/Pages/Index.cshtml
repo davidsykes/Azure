@@ -27,9 +27,9 @@
 </ul>
 
 <div class="tab-content mt-3">
-    @if (activeFood != "")
+    @if (@Model.FoodBeingEdited != null)
     {
-        <p>Edit food @activeFood</p>
+        <p>Prices for @Model.FoodBeingEdited.Name</p>
 
         <select id="fruits" name="fruits">
             <option value="apple">Apple</option>
@@ -42,7 +42,7 @@
     @if (activeTab == "1" || activeTab == "")
     {
         <div>
-            <p>Content for Tab 1</p>
+            <p>List 1 of food actions</p>
             <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
                 <ul>
                     @foreach (var item in Model.FoodItems)
@@ -52,6 +52,17 @@
                 </ul>
             </div>
         </div>
+        <div>
+            <p>List 2 of food actions</p>
+            <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+                <ul>
+                    @foreach (var item in Model.FoodItems)
+                    {
+                                <a asp-page-handler="DoSomething" asp-route-id="@item.Id">Do Something with @item.Name</a>
+                    }
+                </ul>
+                </div>
+            </div>
     }
     else if (activeTab == "2")
     {
@@ -140,17 +151,4 @@
 
         </p>
     </div>
-</div>
-
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
-    <form method="post">
-    <label for="fruit">Choose a fruit:</label>
-    <select asp-for="SelectedFruit" asp-items="Model.FruitOptions" id="fruit" class="form-control"></select>
-    <button type="submit">Submit</button>
-</form>
-
 </div>

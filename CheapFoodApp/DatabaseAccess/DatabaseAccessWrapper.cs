@@ -41,6 +41,12 @@ namespace DatabaseAccess
             return _databaseAccess.Query<FoodItem>(query);
         }
 
+        public FoodItem GetFoodItem(int id)
+        {
+            var query = $"SELECT Id, Name FROM FOODS WHERE Id={id}";
+            return _databaseAccess.Query<FoodItem>(query).First();
+        }
+
         public void AddNewSupermarket(string name)
         {
             _databaseAccess.AddNewSupermarket(new DatabaseString(name));

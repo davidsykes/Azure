@@ -14,6 +14,7 @@ namespace CheapFoodApp.Pages
         public string? ErrorMessage;
         public List<FoodItem> FoodItems;
         public List<Supermarket> Supermarkets;
+        public FoodBeingEdited? FoodBeingEdited;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -50,6 +51,7 @@ namespace CheapFoodApp.Pages
             {
                 _databaseAccess.AddNewSupermarket(InputText);
                 Supermarkets = _databaseAccess.GetSupermarkets();
+                return Redirect("/");
             }
 
             CreateNewFood = true;
@@ -57,6 +59,16 @@ namespace CheapFoodApp.Pages
             return Page();
         }
 
+        public IActionResult OnGetDoSomething(int id)
+        {
+            SetFoodBeingEdited(id);
+            return Page();
+        }
+
+        void SetFoodBeingEdited(int id)
+        {
+            FoodBeingEdited = new FoodBeingEdited(id, _databaseAccess);
+        }
 
         // TOREMOVE
 
@@ -64,11 +76,9 @@ namespace CheapFoodApp.Pages
 
 
         [BindProperty]
-        public List<string> SelectedItems { get; set; } = new();
+        public List<string> SelectedItems { get; set; } = [];
 
-        public List<SelectListItem> ItemList { get; set; } = new();
-
-
+        public List<SelectListItem> ItemList { get; set; } = [];
 
 
 
@@ -77,9 +87,6 @@ namespace CheapFoodApp.Pages
 
 
 
-        [BindProperty]
-        public string SelectedFruit { get; set; } = "";
-        public List<SelectListItem> FruitOptions { get; set; } = [];
         public bool CreateNewFood { get; set; }
         [BindProperty]
         public string InputText { get; set; }
@@ -88,22 +95,8 @@ namespace CheapFoodApp.Pages
 
         public void OnGet()
         {
-            FruitOptions =
-            [
-                new SelectListItem { Value = "apple", Text = "Apple" },
-                    new SelectListItem { Value = "banana", Text = "Banana" },
-                    new SelectListItem { Value = "cherry", Text = "Cherry" }
-            ];
 
             var dbEntries = _databaseAccess.GetTestData();
-
-            dbEntries.ForEach(m =>
-                        FruitOptions.Add(
-                        new SelectListItem
-                        {
-                            Value = m,
-                            Text = m
-                        }));
         }
     }
 }
