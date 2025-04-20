@@ -25,6 +25,8 @@ namespace CheapFoodApp.Pages
         public string AddPriceQuantity { get; set; } = "";
         [BindProperty]
         public string AddPricePrice { get; set; } = "";
+        [BindProperty]
+        public string AddPriceId { get; set; } = "";
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -81,7 +83,7 @@ namespace CheapFoodApp.Pages
         public IActionResult OnPostAddFoodPrice()
         {
             _databaseAccess.AddPrice(
-                FoodBeingEdited.Id,
+                StringToInt(AddPriceId),
                 StringToInt(SelectedAddPriceSupermarket),
                 StringToDouble(AddPriceQuantity),
                 StringToDouble(AddPricePrice));

@@ -50,6 +50,7 @@
             <input type="text" id="addPriceQuantity" name="AddPriceQuantity" />
             <label for="addPriceQuantity">Price:</label>
             <input type="text" id="addPricePrice" name="AddPricePrice" />
+            <input type="hidden" id="addPriceId" name="AddPriceId" value="@Model.FoodBeingEdited.Id" />
 
             <button type="submit" asp-page-handler="AddFoodPrice">Add</button>
         </form>
