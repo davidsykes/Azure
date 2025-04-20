@@ -11,7 +11,6 @@
 
 @{
     var activeTab = Request.Query["tab"].ToString() ?? "1";
-    var activeFood = Request.Query["food"].ToString();
 }
 
 <ul class="nav nav-tabs">
@@ -31,34 +30,23 @@
     {
         <p>Prices for @Model.FoodBeingEdited.Name</p>
 
-        <select id="fruits" name="fruits">
-            <option value="apple">Apple</option>
-            <option value="banana">Banana</option>
-            <option value="orange">Orange</option>
-            <option value="mango">Mango</option>
+        <select id="supermarkets" name="supermarkets">
+            @foreach (var item in Model.Supermarkets)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
         </select>
 
     }
     @if (activeTab == "1" || activeTab == "")
     {
         <div>
-            <p>List 1 of food actions</p>
-            <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
-                <ul>
-                    @foreach (var item in Model.FoodItems)
-                    {
-                        <li><a href="?food=@item.Id">@item.Name</a></li>
-                    }
-                </ul>
-            </div>
-        </div>
-        <div>
             <p>List 2 of food actions</p>
             <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
                 <ul>
                     @foreach (var item in Model.FoodItems)
                     {
-                                <a asp-page-handler="DoSomething" asp-route-id="@item.Id">Do Something with @item.Name</a>
+                                <a asp-page-handler="DoSomething" asp-route-id="@item.Id">@item.Name</a>
                     }
                 </ul>
                 </div>
