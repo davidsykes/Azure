@@ -1,4 +1,4 @@
-﻿namespace SQLiteDatabaseAccess
+﻿namespace SQLiteDatabaseAccess.Library
 {
     internal class SQLiteLoggedCommand
     {

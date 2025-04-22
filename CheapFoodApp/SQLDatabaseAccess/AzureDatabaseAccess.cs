@@ -1,4 +1,5 @@
 ﻿using DatabaseAccessInterfaces;
+using DatabaseAccessInterfaces.Commands;
 using Microsoft.Data.SqlClient;
 using SQLDatabaseAccess.AzureImplementations;
 using SQLDatabaseAccess.Library;
@@ -108,31 +109,36 @@ namespace SQLDatabaseAccess
             command.ExecuteNonQuery();
         }
 
-        public List<string> GetTestData()
+        public void ExecuteCommand(DatabaseCommand command)
         {
-            var rows = new List<string>();
-            try
-            {
-                using var conn = new SqlConnection(_connectionString);
-                conn.Open();
-
-                var command = new SqlCommand("SELECT * FROM Persons", conn);
-                using SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        rows.Add($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                rows.Add("error " + ex.Message );
-            }
-
-            return rows;
+            throw new NotImplementedException();
         }
+
+        //public List<string> GetTestData()
+        //{
+        //    var rows = new List<string>();
+        //    try
+        //    {
+        //        using var conn = new SqlConnection(_connectionString);
+        //        conn.Open();
+
+        //        var command = new SqlCommand("SELECT * FROM Persons", conn);
+        //        using SqlDataReader reader = command.ExecuteReader();
+
+        //        if (reader.HasRows)
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                rows.Add($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}");
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        rows.Add("error " + ex.Message );
+        //    }
+
+        //    return rows;
+        //}
     }
 }

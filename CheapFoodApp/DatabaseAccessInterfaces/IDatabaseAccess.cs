@@ -10,9 +10,6 @@ namespace DatabaseAccessInterfaces
         FoodItem GetFoodItem(int id);
         void AddNewSupermarket(string name);
         List<Supermarket> GetSupermarkets();
-
-
-        public List<string> GetTestData();
         void AddPrice(int foodId, int supermarketId, double quantity, double price);
     }
 }

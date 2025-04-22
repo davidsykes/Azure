@@ -1,5 +1,5 @@
 ﻿using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.DatabaseObjects;
+using DatabaseAccessInterfaces.Commands;
 
 namespace SQLiteDatabaseAccess
 {
@@ -80,10 +80,9 @@ namespace SQLiteDatabaseAccess
             _wrapper.Commit(t);
         }
 
-
-        public List<string> GetTestData()
+        public void ExecuteCommand(DatabaseCommand command)
         {
-            return ["Testing", "The", "Database"];
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace SQLiteDatabaseAccess
+namespace SQLiteDatabaseAccess.Library
 {
     internal class SQLiteCommandToJsonConverter
     {

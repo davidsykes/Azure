@@ -1,5 +1,7 @@
-﻿using DatabaseAccessInterfaces;
+﻿using DatabaseAccess.Commands;
+using DatabaseAccessInterfaces;
 using DatabaseAccessInterfaces.DatabaseObjects;
+using DatabaseAccessInterfaces.DatabaseTableValues;
 using SQLDatabaseAccess;
 using SQLiteDatabaseAccess;
 
@@ -8,10 +10,12 @@ namespace DatabaseAccess
     public class DatabaseAccessWrapper : IDatabaseAccess
     {
         readonly IDatabaseAccessImplementation _databaseAccess;
+        readonly IDatabaseCommandMaker _databaseTableInserter;
 
         public DatabaseAccessWrapper(bool IsRunningOnAzure)
         {
             _databaseAccess = IsRunningOnAzure ? new AzureDatabaseAccess() : new TestDatabaseAccess();
+            _databaseTableInserter = new DatabaseCommandMaker();
 
             if (!TableExists("Foods"))
             {
@@ -58,14 +62,15 @@ namespace DatabaseAccess
             return _databaseAccess.Query<Supermarket>(query);
         }
 
-        public List<string> GetTestData()
-        {
-            return _databaseAccess.GetTestData();
-        }
-
         public void AddPrice(int foodId, int supermarketId, double quantity, double price)
         {
-            throw new NotImplementedException();
+            var insertCommand = _databaseTableInserter.MakeInsertCommand("FoodPrices", [
+                new DatabaseTableIntValue("FoodId", foodId),
+                new DatabaseTableIntValue("SupermarketId", supermarketId),
+                new DatabaseTableDoubleValue("Quantity", quantity),
+                new DatabaseTableDoubleValue("Price", price),
+                ]);
+            _databaseAccess.ExecuteCommand(insertCommand);
         }
     }
 }

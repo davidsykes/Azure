@@ -1,4 +1,4 @@
-﻿using DatabaseAccessInterfaces.DatabaseObjects;
+﻿using DatabaseAccessInterfaces.Commands;
 
 namespace DatabaseAccessInterfaces
 {
@@ -10,7 +10,6 @@ namespace DatabaseAccessInterfaces
         void CreateSupermarketsTable();
         void AddNewSupermarket(DatabaseString databaseString);
         List<T> Query<T>(string query) where T : new();
-
-        List<string> GetTestData();
+        void ExecuteCommand(DatabaseCommand command);
     }
 }
