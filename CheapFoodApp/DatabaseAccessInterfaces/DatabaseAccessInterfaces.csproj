@@ -15,4 +15,8 @@
   </AssemblyAttribute>
 </ItemGroup>
 
+<ItemGroup>
+  <ProjectReference Include="..\SQLLibrary\SQLLibrary.csproj" />
+</ItemGroup>
+
 </Project>

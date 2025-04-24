@@ -44,10 +44,11 @@ namespace DatabaseAccess
             _oldDatabaseAccessImplementation.AddNewFood(new DatabaseString(name));
         }
 
-        public List<FoodItem> GetFoodItems()
+        public IList<FoodItem> GetFoodItems()
         {
-            var query = "SELECT Id, Name FROM FOODS";
-            return _oldDatabaseAccessImplementation.Query<FoodItem>(query);
+            //var query = "SELECT Id, Name FROM FOODS";
+            //return _oldDatabaseAccessImplementation.Query<FoodItem>(query);
+            return _databaseConnection.Select<FoodItem>();
         }
 
         public FoodItem GetFoodItem(int id)

@@ -13,7 +13,7 @@ namespace DatabaseAccess
         {
         }
 
-        public List<FoodItem> GetFoodItems()
+        public IList<FoodItem> GetFoodItems()
         {
             return [.. GetTestData().Select(m => new FoodItem { Id = 1, Name = m })];
         }

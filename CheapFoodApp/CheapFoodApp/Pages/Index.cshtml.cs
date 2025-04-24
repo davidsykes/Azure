@@ -12,7 +12,7 @@ namespace CheapFoodApp.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly IDatabaseAccess _databaseAccess;
         public string? ErrorMessage;
-        public List<FoodItem> FoodItems;
+        public IList<FoodItem> FoodItems;
         public List<Supermarket> Supermarkets;
         public FoodBeingEdited? FoodBeingEdited;
 

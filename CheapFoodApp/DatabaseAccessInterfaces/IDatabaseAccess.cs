@@ -6,7 +6,7 @@ namespace DatabaseAccessInterfaces
     {
         bool TableExists(string name);
         void AddNewFood(string name);
-        List<FoodItem> GetFoodItems();
+        IList<FoodItem> GetFoodItems();
         FoodItem GetFoodItem(int id);
         void AddNewSupermarket(string name);
         List<Supermarket> GetSupermarkets();
