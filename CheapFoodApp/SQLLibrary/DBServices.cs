@@ -23,30 +23,5 @@ namespace SQLLibrary
                 _tableAnalyser,
                 _databaseTransactionFactory);
         }
-
-        //public IDatabaseConnection OpenFileConnection(string databasePath)
-        //{
-        //    return new DatabaseConnection(
-        //        new SQLiteWrapper(CreateFileConnectionString(databasePath)),
-        //        _tableAnalyser,
-        //        _databaseTransactionFactory);
-        //}
-
-        //public IDatabaseConnection OpenMemoryDatabase()
-        //{
-        //    return new DatabaseConnection(new SQLiteWrapper(CreateMemoryConnectionString()),
-        //        _tableAnalyser,
-        //        _databaseTransactionFactory);
-        //}
-
-        //private static string CreateFileConnectionString(string databasePath)
-        //{
-        //    return $"Data Source={databasePath}";
-        //}
-
-        //private static string CreateMemoryConnectionString()
-        //{
-        //    return "Data Source=:memory:;";
-        //}
     }
 }

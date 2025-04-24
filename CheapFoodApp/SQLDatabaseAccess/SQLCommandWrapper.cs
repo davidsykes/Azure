@@ -19,12 +19,23 @@ namespace SQLDatabaseAccess
 
         public void AddParameter(string name, object value)
         {
-            throw new NotImplementedException();
+            var parameter = new SqlParameter(name, value);
+            _command.Parameters.Add(parameter);
+        }
+
+        public int ExecuteNonQuery()
+        {
+            return _command.ExecuteNonQuery();
         }
 
         public IDatabaseDataReader ExecuteReader()
         {
             return new SqlDataReaderWrapper(_command.ExecuteReader());
+        }
+
+        public object? ExecuteScalar()
+        {
+            return _command.ExecuteScalar();
         }
     }
 }

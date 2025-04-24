@@ -42,16 +42,6 @@ namespace SQLDatabaseAccess
             //return new SQLiteTransactionWrapper(_connection.BeginTransaction());
         }
 
-        public int ExecuteNonQueryCommand(IDatabaseCommand sCommand)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object? ExecuteScalarCommand(IDatabaseCommand sCommand)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Close()
         {
             throw new NotImplementedException();

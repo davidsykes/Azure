@@ -10,21 +10,22 @@ namespace DatabaseAccess
 {
     public class DatabaseAccessWrapper : IDatabaseAccess
     {
-        readonly IActualDatabaseConnection _newDatabaseAccess;
+        readonly IActualDatabaseConnection _actualDatabaseConnection;
         readonly IDatabaseConnection _databaseConnection;
 
         public DatabaseAccessWrapper(bool IsRunningOnAzure)
         {
             string sqlDatabasePath = "D:\\TestData\\CheapFood.sql";
-            _newDatabaseAccess = IsRunningOnAzure ? new SQLDatabaseConnection() : new SQLLiteDatabaseConnection(sqlDatabasePath);
+            _actualDatabaseConnection = IsRunningOnAzure ? new SQLDatabaseConnection() : new SQLLiteDatabaseConnection(sqlDatabasePath);
             var dbServices = new DBServices();
-            _databaseConnection = dbServices.OpenConnection(_newDatabaseAccess);
+            _databaseConnection = dbServices.OpenConnection(_actualDatabaseConnection);
         }
 
         public void AddNewFood(string name)
         {
-            throw new NotImplementedException();
-            //_oldDatabaseAccessImplementation.AddNewFood(new DatabaseString(name));
+            var food = new FoodItem { Name = name };
+            _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
+                => tr.InsertRow(food));
         }
 
         public IList<FoodItem> GetFoodItems()
@@ -36,9 +37,7 @@ namespace DatabaseAccess
 
         public FoodItem GetFoodItem(int id)
         {
-            var query = $"SELECT Id, Name FROM FOODS WHERE Id={id}";
-            throw new NotImplementedException();
-            //return _oldDatabaseAccessImplementation.Query<FoodItem>(query).First();
+            return _databaseConnection.Select<FoodItem>().Single(m => m.Id == id);
         }
 
         public void AddNewSupermarket(string name)

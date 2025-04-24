@@ -117,7 +117,7 @@ namespace SQLLibrary.SQLite
             RaiseLogSQLiteCommandEvent(command, parameters);
             var sCommand = _connection.CreateDatabaseCommand(command, transaction);
             AddParametersToCommand(sCommand, parameters);
-            return _connection.ExecuteNonQueryCommand(sCommand);
+            return sCommand.ExecuteNonQuery();
         }
 
         public long ExecuteScalar(
@@ -127,7 +127,7 @@ namespace SQLLibrary.SQLite
 
             command = "; SELECT last_insert_rowid()";
             var sCommand = _connection.CreateDatabaseCommand(command, transaction);
-            var result = _connection.ExecuteScalarCommand(sCommand) ?? throw new SQLiteLibraryException("Null result from ExecuteScalar");
+            var result = sCommand.ExecuteScalar() ?? throw new SQLiteLibraryException("Null result from ExecuteScalar");
             var resultAsInt = (long)result;
             return resultAsInt;
         }
