@@ -1,23 +1,17 @@
 ﻿using SQLiteLibrary;
 using SQLiteLibrary.SQLite;
 using SQLLibraryInterface;
-using SQLLibraryInterface.ToBeImplemented;
 using System.Reflection;
 
 namespace SQLLibrary.SQLite
 {
-    internal class SQLiteWrapper : ISQLiteWrapper, IDisposable
+    internal class SQLiteWrapper(IActualDatabaseConnection connection) : ISQLiteWrapper, IDisposable
     {
-        readonly IActualDatabaseConnection _connection;
+        readonly IActualDatabaseConnection _connection = connection;
 
         public event LogSQLiteCommandDelegate? LogSQLiteCommandEvent;
 
         #region Public Methods
-
-        public SQLiteWrapper(IActualDatabaseConnection connection)
-        {
-            _connection = connection;
-        }
 
         public List<T> Select<T>(
             IDatabaseTransactionWrapper? transaction,
@@ -30,13 +24,13 @@ namespace SQLLibrary.SQLite
                 query = query + " WHERE " + where;
             }
 
-            var command = new DatabaseCommand(query);
+            var command = _connection.CreateDatabaseCommand(query, transaction);
             AddParametersToCommand(command, parameters);
 
             var results = new List<T>();
             var objectProperties = typeof(T).GetProperties();
 
-            using (var reader = _connection.ExecuteReaderCommand(command))
+            using (var reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -121,7 +115,7 @@ namespace SQLLibrary.SQLite
             IDatabaseTransactionWrapper? transaction, string command, object? parameters)
         {
             RaiseLogSQLiteCommandEvent(command, parameters);
-            var sCommand = new DatabaseCommand(command);
+            var sCommand = _connection.CreateDatabaseCommand(command, transaction);
             AddParametersToCommand(sCommand, parameters);
             return _connection.ExecuteNonQueryCommand(sCommand);
         }
@@ -132,7 +126,7 @@ namespace SQLLibrary.SQLite
             ExecuteNonQuery(transaction, command, parameters);
 
             command = "; SELECT last_insert_rowid()";
-            var sCommand = new DatabaseCommand(command);
+            var sCommand = _connection.CreateDatabaseCommand(command, transaction);
             var result = _connection.ExecuteScalarCommand(sCommand) ?? throw new SQLiteLibraryException("Null result from ExecuteScalar");
             var resultAsInt = (long)result;
             return resultAsInt;
@@ -147,7 +141,7 @@ namespace SQLLibrary.SQLite
 
         #region Support Code
 
-        private static void AddParametersToCommand(DatabaseCommand command, object? parameters)
+        private static void AddParametersToCommand(IDatabaseCommand command, object? parameters)
         {
             if (parameters != null)
             {
@@ -156,20 +150,19 @@ namespace SQLLibrary.SQLite
                     var name = prop.Name;
                     var value = prop.GetValue(parameters, null);
 
-                    var parameter = new DatabaseCommandParameter("@" + name, value ?? DBNull.Value);
-                    command.Parameters.Add(parameter);
+                    command.AddParameter("@" + name, value ?? DBNull.Value);
                 }
             }
         }
 
-        private static string? GetString(IDataReader reader, int ordinal)
+        private static string? GetString(IDatabaseDataReader reader, int ordinal)
         {
             if (reader.IsDBNull(ordinal))
                 return null;
             return reader.GetString(ordinal);
         }
 
-        private static DateTime GetDateTime(IDataReader reader, int ordinal)
+        private static DateTime GetDateTime(IDatabaseDataReader reader, int ordinal)
         {
             if (reader.IsDBNull(ordinal))
                 return DateTime.MinValue;
@@ -180,16 +173,6 @@ namespace SQLLibrary.SQLite
         {
            return _connection.CreateTransaction();
         }
-
-        //public void Commit(IDatabaseTransactionWrapper transaction)
-        //{
-        //    transaction.Commit();
-        //}
-
-        //public void Rollback(IDatabaseTransactionWrapper transaction)
-        //{
-        //    transaction.Rollback();
-        //}
 
         private void RaiseLogSQLiteCommandEvent(string command, object? parameters)
         {
