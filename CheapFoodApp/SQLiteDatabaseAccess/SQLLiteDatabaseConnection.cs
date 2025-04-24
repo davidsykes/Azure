@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using SQLiteDatabaseAccess.Library;
 using SQLLibraryInterface;
 
 namespace SQLiteDatabaseAccess

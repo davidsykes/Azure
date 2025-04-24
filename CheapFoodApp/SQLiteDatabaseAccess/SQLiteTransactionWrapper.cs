@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using SQLLibraryInterface;
 
-namespace SQLiteDatabaseAccess.Library
+namespace SQLiteDatabaseAccess
 {
     internal class SQLiteTransactionWrapper(SqliteTransaction sqliteTransaction) : IDatabaseTransactionWrapper
     {
