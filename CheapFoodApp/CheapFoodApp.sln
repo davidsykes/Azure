@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAccessInterfaces", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLLibrary", "SQLLibrary\SQLLibrary.csproj", "{5A7CD7A2-ED8B-4ED9-8DCA-DC4B9EC64B85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLLibraryInterface", "SQLLibraryInterface\SQLLibraryInterface.csproj", "{50C5FECE-360C-486C-AA59-5F9B3F9371FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A7CD7A2-ED8B-4ED9-8DCA-DC4B9EC64B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A7CD7A2-ED8B-4ED9-8DCA-DC4B9EC64B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A7CD7A2-ED8B-4ED9-8DCA-DC4B9EC64B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A7CD7A2-ED8B-4ED9-8DCA-DC4B9EC64B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50C5FECE-360C-486C-AA59-5F9B3F9371FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50C5FECE-360C-486C-AA59-5F9B3F9371FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50C5FECE-360C-486C-AA59-5F9B3F9371FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50C5FECE-360C-486C-AA59-5F9B3F9371FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

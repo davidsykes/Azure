@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatabaseAccessInterfaces\DatabaseAccessInterfaces.csproj" />
+    <ProjectReference Include="..\SQLLibraryInterface\SQLLibraryInterface.csproj" />
   </ItemGroup>
 
 </Project>

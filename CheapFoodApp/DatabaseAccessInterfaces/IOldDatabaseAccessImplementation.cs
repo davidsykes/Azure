@@ -1,8 +1,6 @@
-﻿using DatabaseAccessInterfaces.Commands;
-
-namespace DatabaseAccessInterfaces
+﻿namespace DatabaseAccessInterfaces
 {
-    public interface IDatabaseAccessImplementation
+    public interface IOldDatabaseAccessImplementation
     {
         List<string> GetTableNames();
         void CreateFoodsTable();
@@ -10,6 +8,5 @@ namespace DatabaseAccessInterfaces
         void CreateSupermarketsTable();
         void AddNewSupermarket(DatabaseString databaseString);
         List<T> Query<T>(string query) where T : new();
-        void ExecuteCommand(DatabaseCommand command);
     }
 }

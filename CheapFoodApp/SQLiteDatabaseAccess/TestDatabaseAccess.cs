@@ -1,5 +1,5 @@
 ﻿using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.Commands;
+using SQLiteDatabaseAccess.Library;
 
 namespace SQLiteDatabaseAccess
 {
@@ -8,7 +8,7 @@ namespace SQLiteDatabaseAccess
         public string name { get; set; } = "";
     }
 
-    public class TestDatabaseAccess : IDatabaseAccessImplementation
+    public class TestDatabaseAccess : IOldDatabaseAccessImplementation
     {
         private readonly ISQLiteWrapper _wrapper;
 
@@ -78,11 +78,6 @@ namespace SQLiteDatabaseAccess
                 query,
                 new { Name = name.ToString() });
             _wrapper.Commit(t);
-        }
-
-        public void ExecuteCommand(DatabaseCommand command)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SQLDatabaseAccess\SQLDatabaseAccess.csproj" />
     <ProjectReference Include="..\SQLiteDatabaseAccess\SQLiteDatabaseAccess.csproj" />
+    <ProjectReference Include="..\SQLLibrary\SQLLibrary.csproj" />
   </ItemGroup>
 
 <ItemGroup>

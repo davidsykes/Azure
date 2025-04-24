@@ -1,12 +1,11 @@
 ﻿using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.Commands;
 using Microsoft.Data.SqlClient;
 using SQLDatabaseAccess.AzureImplementations;
 using SQLDatabaseAccess.Library;
 
 namespace SQLDatabaseAccess
 {
-    public class AzureDatabaseAccess : IDatabaseAccessImplementation
+    public class AzureDatabaseAccess : IOldDatabaseAccessImplementation
     {
         readonly string _connectionString = "Server=tcp:cheapfooddbserver.database.windows.net,1433;Initial Catalog=CheapFoodDb;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=\"Active Directory Default\";";
         //private ISQLiteWrapper? _wrapper;
@@ -108,37 +107,5 @@ namespace SQLDatabaseAccess
             command.Parameters.AddWithValue("@Name", name.ToString());
             command.ExecuteNonQuery();
         }
-
-        public void ExecuteCommand(DatabaseCommand command)
-        {
-            throw new NotImplementedException();
-        }
-
-        //public List<string> GetTestData()
-        //{
-        //    var rows = new List<string>();
-        //    try
-        //    {
-        //        using var conn = new SqlConnection(_connectionString);
-        //        conn.Open();
-
-        //        var command = new SqlCommand("SELECT * FROM Persons", conn);
-        //        using SqlDataReader reader = command.ExecuteReader();
-
-        //        if (reader.HasRows)
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                rows.Add($"{reader.GetInt32(0)}, {reader.GetString(1)}, {reader.GetString(2)}");
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        rows.Add("error " + ex.Message );
-        //    }
-
-        //    return rows;
-        //}
     }
 }
