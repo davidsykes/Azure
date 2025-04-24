@@ -1,4 +1,4 @@
-﻿namespace SQLiteLibrary.SQLite
+﻿namespace SQLLibrary.SQLite
 {
     internal interface ICommittable
     {

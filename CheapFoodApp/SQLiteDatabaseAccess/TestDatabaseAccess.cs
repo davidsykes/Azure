@@ -12,10 +12,8 @@ namespace SQLiteDatabaseAccess
     {
         private readonly ISQLiteWrapper _wrapper;
 
-        public TestDatabaseAccess()
+        public TestDatabaseAccess(string databasePath)
         {
-            string databasePath = "D:\\TestData\\CheapFood.sql";
-
             _wrapper = new SQLiteWrapper(CreateFileConnectionString(databasePath));
         }
 

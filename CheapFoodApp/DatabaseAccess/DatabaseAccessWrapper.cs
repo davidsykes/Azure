@@ -16,8 +16,9 @@ namespace DatabaseAccess
 
         public DatabaseAccessWrapper(bool IsRunningOnAzure)
         {
-            _oldDatabaseAccessImplementation = IsRunningOnAzure ? new AzureDatabaseAccess() : new TestDatabaseAccess();
-            _newDatabaseAccess = IsRunningOnAzure ? new SQLDatabaseConnection() : new SQLLiteDatabaseConnection();
+            string sqlDatabasePath = "D:\\TestData\\CheapFood.sql";
+            _oldDatabaseAccessImplementation = IsRunningOnAzure ? new AzureDatabaseAccess() : new TestDatabaseAccess(sqlDatabasePath);
+            _newDatabaseAccess = IsRunningOnAzure ? new SQLDatabaseConnection() : new SQLLiteDatabaseConnection(sqlDatabasePath);
             var dbServices = new DBServices();
             _databaseConnection = dbServices.OpenConnection(_newDatabaseAccess);
 

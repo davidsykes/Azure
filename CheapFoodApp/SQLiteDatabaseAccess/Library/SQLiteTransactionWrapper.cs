@@ -1,14 +1,20 @@
 ﻿using Microsoft.Data.Sqlite;
+using SQLLibraryInterface;
 
 namespace SQLiteDatabaseAccess.Library
 {
-    internal class SQLiteTransactionWrapper
+    internal class SQLiteTransactionWrapper(SqliteTransaction sqliteTransaction) : IDatabaseTransactionWrapper
     {
-        public SqliteTransaction SqliteTransaction { get; private set; }
+        public SqliteTransaction SqliteTransaction { get; private set; } = sqliteTransaction;
 
-        public SQLiteTransactionWrapper(SqliteTransaction sqliteTransaction)
+        public void Commit()
         {
-            SqliteTransaction = sqliteTransaction;
+            SqliteTransaction.Commit();
+        }
+
+        public void Rollback()
+        {
+            SqliteTransaction.Rollback();
         }
     }
 }

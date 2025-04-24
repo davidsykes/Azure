@@ -5,9 +5,9 @@ namespace SQLLibraryInterface
     public interface IActualDatabaseConnection
     {
         void Close();
-        ISQLiteTransactionWrapper CreateTransaction();
-        int ExecuteNonQueryCommand(SqliteCommand sCommand);
-        IDataReader ExecuteReaderCommand(SqliteCommand command);
-        object? ExecuteScalarCommand(SqliteCommand sCommand);
+        IDatabaseTransactionWrapper CreateTransaction();
+        int ExecuteNonQueryCommand(DatabaseCommand sCommand);
+        IDataReader ExecuteReaderCommand(DatabaseCommand command);
+        object? ExecuteScalarCommand(DatabaseCommand sCommand);
     }
 }

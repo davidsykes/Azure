@@ -1,8 +1,7 @@
 ﻿using SQLiteLibrary;
-using SQLiteLibrary.SQLite;
 using SQLLibrary.SQLite;
 using SQLLibrary.TableAnalysis;
-using SQLLibraryInterface.ToBeImplemented;
+using SQLLibraryInterface;
 using System.Reflection;
 
 namespace SQLLibrary.CRUD
@@ -11,7 +10,7 @@ namespace SQLLibrary.CRUD
     {
         private readonly ISQLiteWrapper _sqLiteWrapper;
         private readonly ITableAnalyser _tableAnalyser;
-        private readonly ISQLiteTransactionWrapper _sqliteTransaction;
+        private readonly IDatabaseTransactionWrapper _sqliteTransaction;
 
         public bool RollbackTransaction { get; set; }
 
@@ -214,12 +213,12 @@ namespace SQLLibrary.CRUD
 
         public void Commit()
         {
-            _sqLiteWrapper.Commit(_sqliteTransaction);
+            _sqliteTransaction.Commit();
         }
 
         public void Rollback()
         {
-            _sqLiteWrapper.Rollback(_sqliteTransaction);
+            _sqliteTransaction.Rollback();
         }
     }
 }

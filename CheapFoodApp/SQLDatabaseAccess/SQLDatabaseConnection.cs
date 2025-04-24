@@ -10,22 +10,22 @@ namespace SQLDatabaseAccess
             throw new NotImplementedException();
         }
 
-        public ISQLiteTransactionWrapper CreateTransaction()
+        public IDatabaseTransactionWrapper CreateTransaction()
         {
             throw new NotImplementedException();
         }
 
-        public int ExecuteNonQueryCommand(SqliteCommand sCommand)
+        public int ExecuteNonQueryCommand(DatabaseCommand sCommand)
         {
             throw new NotImplementedException();
         }
 
-        public IDataReader ExecuteReaderCommand(SqliteCommand command)
+        public IDataReader ExecuteReaderCommand(DatabaseCommand command)
         {
             throw new NotImplementedException();
         }
 
-        public object ExecuteScalarCommand(SqliteCommand command)
+        public object ExecuteScalarCommand(DatabaseCommand command)
         {
             throw new NotImplementedException();
         }

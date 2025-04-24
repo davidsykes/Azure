@@ -1,0 +1,4 @@
+
+
+DatabaseCommand     A database command
+                    Holds the sql command and the parameters

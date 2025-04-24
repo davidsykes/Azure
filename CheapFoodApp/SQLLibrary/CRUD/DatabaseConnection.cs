@@ -1,5 +1,4 @@
 ﻿using SQLiteLibrary;
-using SQLiteLibrary.SQLite;
 using SQLLibrary.SQLite;
 using SQLLibrary.TableAnalysis;
 

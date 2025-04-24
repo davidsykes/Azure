@@ -20,7 +20,7 @@ namespace SQLLibrary.SQLite
         }
 
         public List<T> Select<T>(
-            ISQLiteTransactionWrapper? transaction,
+            IDatabaseTransactionWrapper? transaction,
             string query,
             string? where,
             object? parameters) where T : new()
@@ -30,7 +30,7 @@ namespace SQLLibrary.SQLite
                 query = query + " WHERE " + where;
             }
 
-            var command = CreateCommand(query, transaction);
+            var command = new DatabaseCommand(query);
             AddParametersToCommand(command, parameters);
 
             var results = new List<T>();
@@ -118,21 +118,21 @@ namespace SQLLibrary.SQLite
         }
 
         public int ExecuteNonQuery(
-            ISQLiteTransactionWrapper? transaction, string command, object? parameters)
+            IDatabaseTransactionWrapper? transaction, string command, object? parameters)
         {
             RaiseLogSQLiteCommandEvent(command, parameters);
-            var sCommand = CreateCommand(command, transaction);
+            var sCommand = new DatabaseCommand(command);
             AddParametersToCommand(sCommand, parameters);
             return _connection.ExecuteNonQueryCommand(sCommand);
         }
 
         public long ExecuteScalar(
-            ISQLiteTransactionWrapper transaction, string command, object? parameters = null)
+            IDatabaseTransactionWrapper transaction, string command, object? parameters = null)
         {
             ExecuteNonQuery(transaction, command, parameters);
 
             command = "; SELECT last_insert_rowid()";
-            var sCommand = CreateCommand(command, transaction);
+            var sCommand = new DatabaseCommand(command);
             var result = _connection.ExecuteScalarCommand(sCommand) ?? throw new SQLiteLibraryException("Null result from ExecuteScalar");
             var resultAsInt = (long)result;
             return resultAsInt;
@@ -147,12 +147,7 @@ namespace SQLLibrary.SQLite
 
         #region Support Code
 
-        private SqliteCommand CreateCommand(string commandText, ISQLiteTransactionWrapper? transaction)
-        {
-            return new SqliteCommand(_connection, commandText, transaction);
-        }
-
-        private static void AddParametersToCommand(SqliteCommand command, object? parameters)
+        private static void AddParametersToCommand(DatabaseCommand command, object? parameters)
         {
             if (parameters != null)
             {
@@ -161,7 +156,7 @@ namespace SQLLibrary.SQLite
                     var name = prop.Name;
                     var value = prop.GetValue(parameters, null);
 
-                    var parameter = new SqliteParameter("@" + name, value ?? DBNull.Value);
+                    var parameter = new DatabaseCommandParameter("@" + name, value ?? DBNull.Value);
                     command.Parameters.Add(parameter);
                 }
             }
@@ -181,20 +176,20 @@ namespace SQLLibrary.SQLite
             return reader.GetDateTime(ordinal);
         }
 
-        public ISQLiteTransactionWrapper CreateTransaction()
+        public IDatabaseTransactionWrapper CreateTransaction()
         {
-            return _connection.CreateTransaction();
+           return _connection.CreateTransaction();
         }
 
-        public void Commit(ISQLiteTransactionWrapper transaction)
-        {
-            transaction.Commit();
-        }
+        //public void Commit(IDatabaseTransactionWrapper transaction)
+        //{
+        //    transaction.Commit();
+        //}
 
-        public void Rollback(ISQLiteTransactionWrapper transaction)
-        {
-            transaction.Rollback();
-        }
+        //public void Rollback(IDatabaseTransactionWrapper transaction)
+        //{
+        //    transaction.Rollback();
+        //}
 
         private void RaiseLogSQLiteCommandEvent(string command, object? parameters)
         {
