@@ -1,7 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using SQLiteDatabaseAccess.Library;
 using SQLLibraryInterface;
-using SQLLibraryInterface.ToBeImplemented;
 
 namespace SQLiteDatabaseAccess
 {
@@ -26,17 +25,12 @@ namespace SQLiteDatabaseAccess
             return new SQLiteTransactionWrapper(_connection.BeginTransaction());
         }
 
-        public int ExecuteNonQueryCommand(DatabaseCommand sCommand)
+        public int ExecuteNonQueryCommand(IDatabaseCommand sCommand)
         {
             throw new NotImplementedException();
         }
 
-        public IDataReader ExecuteReaderCommand(DatabaseCommand command)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object? ExecuteScalarCommand(DatabaseCommand sCommand)
+        public object? ExecuteScalarCommand(IDatabaseCommand sCommand)
         {
             throw new NotImplementedException();
         }
@@ -44,6 +38,14 @@ namespace SQLiteDatabaseAccess
         public void Close()
         {
             throw new NotImplementedException();
+        }
+
+        public IDatabaseCommand CreateDatabaseCommand(
+            string commandText, IDatabaseTransactionWrapper? transactionWrapper)
+        {
+            var transaction = transactionWrapper as SQLiteTransactionWrapper;
+
+            return new SQLiteCommandWrapper(_connection, commandText, transaction?.SqliteTransaction);
         }
     }
 }

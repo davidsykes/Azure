@@ -13,7 +13,7 @@ namespace CheapFoodApp.Pages
         private readonly IDatabaseAccess _databaseAccess;
         public string? ErrorMessage;
         public IList<FoodItem> FoodItems;
-        public List<Supermarket> Supermarkets;
+        public IList<Supermarket> Supermarkets;
         public FoodBeingEdited? FoodBeingEdited;
 
         [BindProperty]

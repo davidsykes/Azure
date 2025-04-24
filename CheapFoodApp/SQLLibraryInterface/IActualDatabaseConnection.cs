@@ -1,13 +1,11 @@
-﻿using SQLLibraryInterface.ToBeImplemented;
-
-namespace SQLLibraryInterface
+﻿namespace SQLLibraryInterface
 {
     public interface IActualDatabaseConnection
     {
         void Close();
+        IDatabaseCommand CreateDatabaseCommand(string query, IDatabaseTransactionWrapper? transactionWrapper);
         IDatabaseTransactionWrapper CreateTransaction();
-        int ExecuteNonQueryCommand(DatabaseCommand sCommand);
-        IDataReader ExecuteReaderCommand(DatabaseCommand command);
-        object? ExecuteScalarCommand(DatabaseCommand sCommand);
+        int ExecuteNonQueryCommand(IDatabaseCommand sCommand);
+        object? ExecuteScalarCommand(IDatabaseCommand sCommand);
     }
 }

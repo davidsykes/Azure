@@ -1,6 +1,6 @@
-﻿namespace SQLLibraryInterface.ToBeImplemented
+﻿namespace SQLLibraryInterface
 {
-    public interface IDataReader : IDisposable
+    public interface IDatabaseDataReader : IDisposable
     {
         int FieldCount { get; }
 

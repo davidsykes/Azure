@@ -23,12 +23,12 @@ namespace DatabaseAccess
             return new FoodItem { Id = 1, Name = "Food" };
         }
 
-        public List<Supermarket> GetSupermarkets()
+        public IList<Supermarket> GetSupermarkets()
         {
             return [.. GetTestData().Select(m => new Supermarket { Id = 1, Name = m })];
         }
 
-        public List<string> GetTestData()
+        public IList<string> GetTestData()
         {
             return ["Dummy", "data"];
         }
