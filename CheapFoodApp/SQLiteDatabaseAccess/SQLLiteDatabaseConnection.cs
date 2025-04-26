@@ -26,7 +26,7 @@ namespace SQLiteDatabaseAccess
 
         public void Close()
         {
-            throw new NotImplementedException();
+            _connection.Close();
         }
 
         public IDatabaseCommand CreateDatabaseCommand(

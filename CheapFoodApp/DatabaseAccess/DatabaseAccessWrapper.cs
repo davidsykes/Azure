@@ -1,5 +1,6 @@
 ﻿using DatabaseAccessInterfaces;
 using DatabaseAccessInterfaces.DatabaseObjects;
+using Microsoft.Data.SqlClient;
 using SQLDatabaseAccess;
 using SQLiteDatabaseAccess;
 using SQLiteLibrary;
@@ -19,7 +20,44 @@ namespace DatabaseAccess
             _actualDatabaseConnection = IsRunningOnAzure ? new SQLDatabaseConnection() : new SQLLiteDatabaseConnection(sqlDatabasePath);
             var dbServices = new DBServices();
             _databaseConnection = dbServices.OpenConnection(_actualDatabaseConnection);
+
+            if (IsRunningOnAzure)
+            {
+                CreateAzureTables();
+            }
+            else
+            {
+                CreateSqlLiteTables();
+            }
         }
+
+        private void CreateSqlLiteTables()
+        {
+            _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
+                =>
+            {
+                tr.CreateTable<ProductPrice>();
+            });
+        }
+
+        private void CreateAzureTables()
+        {
+            CreateAzurePricesTable();
+        }
+
+
+        public void CreateAzurePricesTable()
+        {
+            string tableCommand = @"CREATE TABLE Prices (FoodId INT, ShopId INT, Quantity MONEY, Price MONEY);";
+
+
+            _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
+                =>
+            {
+                tr.ExecuteNonQuery(tableCommand);
+            });
+        }
+
 
         public void AddNewFood(string name)
         {

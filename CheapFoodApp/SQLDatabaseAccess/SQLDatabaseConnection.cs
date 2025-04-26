@@ -38,13 +38,12 @@ namespace SQLDatabaseAccess
 
         public IDatabaseTransactionWrapper CreateTransaction()
         {
-            throw new NotImplementedException();
-            //return new SQLiteTransactionWrapper(_connection.BeginTransaction());
+            return new SQLTransactionWrapper(_connection.BeginTransaction());
         }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            _connection.Close();
         }
 
         public IDatabaseCommand CreateDatabaseCommand(
