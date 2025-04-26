@@ -1,4 +1,4 @@
-﻿namespace SQLiteLibrary
+﻿namespace SQLLibraryInterface
 {
     public class SQLiteLibraryException : Exception
     {

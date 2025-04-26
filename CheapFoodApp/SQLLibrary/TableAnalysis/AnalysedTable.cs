@@ -1,6 +1,6 @@
-﻿using SQLLibrary.TableAnalysis;
+﻿using SQLLibraryInterface;
 
-namespace SQLiteLibrary.TableAnalysis
+namespace SQLLibrary.TableAnalysis
 {
     internal class AnalysedTable : IAnalysedTable
     {

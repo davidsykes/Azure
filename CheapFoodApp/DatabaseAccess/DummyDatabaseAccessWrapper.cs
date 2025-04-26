@@ -1,5 +1,5 @@
-﻿using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.DatabaseObjects;
+﻿using DatabaseAccess.DatabaseObjects;
+using DatabaseAccessInterfaces;
 
 namespace DatabaseAccess
 {
@@ -28,18 +28,26 @@ namespace DatabaseAccess
             return [.. GetTestData().Select(m => new Supermarket { Id = 1, Name = m })];
         }
 
-        public IList<string> GetTestData()
+        public static IList<string> GetTestData()
         {
             return ["Dummy", "data"];
         }
 
-        public bool TableExists(string name)
-        {
-            return true;
-        }
+        public static bool TableExists(string _) => true;
 
         public void AddPrice(int foodId, int supermarketId, double quantity, double price)
         {
+        }
+
+        public IList<ProductPrice> GetFoodPrices(int id)
+        {
+            return [.. GetTestData().Select(m => new ProductPrice
+            {
+                ShopId = 1,
+                FoodId = 1,
+                Price = 1,
+                Quantity = 1
+            })];
         }
     }
 }

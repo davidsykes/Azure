@@ -1,9 +1,9 @@
 ﻿using DatabaseAccess;
+using DatabaseAccess.DatabaseObjects;
 using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.DatabaseObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SQLiteLibrary;
+using SQLLibraryInterface;
 
 namespace CheapFoodApp.Pages
 {
@@ -15,6 +15,7 @@ namespace CheapFoodApp.Pages
         public IList<FoodItem> FoodItems;
         public IList<Supermarket> Supermarkets;
         public FoodBeingEdited? FoodBeingEdited;
+        public IList<ProductPrice> PricesForFoodBeingEdited;
 
         [BindProperty]
         public string InputText { get; set; } = "";
@@ -43,12 +44,11 @@ namespace CheapFoodApp.Pages
 
             FoodItems = _databaseAccess.GetFoodItems();
             Supermarkets = _databaseAccess.GetSupermarkets();
+            PricesForFoodBeingEdited = [];
         }
 
         private static bool IsRunningOnAzure => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"));
         //private static bool IsRunningOnAzure => true;
-
-
 
         public IActionResult OnPost()
         {
@@ -69,7 +69,7 @@ namespace CheapFoodApp.Pages
             return Page();
         }
 
-        public IActionResult OnGetDoSomething(int id)
+        public IActionResult OnGetSelectFoodToBeChecked(int id)
         {
             SetFoodBeingEdited(id);
             return Page();
@@ -78,6 +78,7 @@ namespace CheapFoodApp.Pages
         void SetFoodBeingEdited(int id)
         {
             FoodBeingEdited = new FoodBeingEdited(id, _databaseAccess);
+            PricesForFoodBeingEdited = _databaseAccess.GetFoodPrices(id);
         }
 
         public IActionResult OnPostAddFoodPrice()
@@ -87,7 +88,7 @@ namespace CheapFoodApp.Pages
                 StringToInt(SelectedAddPriceSupermarket),
                 StringToDouble(AddPriceQuantity),
                 StringToDouble(AddPricePrice));
-            return RedirectToPage("Index"); // Example
+            return RedirectToPage("Index");
         }
 
         static int StringToInt(string s)
@@ -100,8 +101,10 @@ namespace CheapFoodApp.Pages
             return double.Parse(s);
         }
 
-
-
+        public string Supermarket(Int64 shopId)
+        {
+            return Supermarkets.Single(s => s.Id == shopId).Name;
+        }
 
         public void OnGet()
         {

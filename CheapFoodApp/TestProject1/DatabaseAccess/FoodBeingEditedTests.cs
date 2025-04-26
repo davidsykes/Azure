@@ -1,6 +1,6 @@
 using DatabaseAccess;
+using DatabaseAccess.DatabaseObjects;
 using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.DatabaseObjects;
 using FluentAssertions;
 using Moq;
 using TestHelpers;

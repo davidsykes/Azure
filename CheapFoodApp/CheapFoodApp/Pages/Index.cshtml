@@ -28,7 +28,13 @@
 <div class="tab-content mt-3">
     @if (@Model.FoodBeingEdited != null)
     {
-        <p>Prices for @Model.FoodBeingEdited.Name</p>
+        <p>Prices for @Model.FoodBeingEdited.Name (@Model.FoodBeingEdited.Id)</p>
+
+
+        @foreach (var item in Model.PricesForFoodBeingEdited)
+        {
+            <p>@Model.Supermarket(item.ShopId) @item.Quantity = £@item.Price</p>
+        }
 
         <select id="supermarkets" name="supermarkets">
             @foreach (var item in Model.Supermarkets)
@@ -38,7 +44,7 @@
         </select>
 
         <form method="post">
-            <label for="selectedAddPriceSupermarket">Choose an option:</label>
+            <label for="selectedAddPriceSupermarket">Choose an option:(@Model.FoodBeingEdited.Id)</label>
             <select id="selectedAddPriceSupermarket" name="SelectedAddPriceSupermarket">
                 @foreach (var item in Model.Supermarkets)
                 {
@@ -60,22 +66,19 @@
     @if (activeTab == "1" || activeTab == "")
     {
         <div>
-            <p>List 2 of food actions</p>
             <div style="max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
-                <ul>
-                    @foreach (var item in Model.FoodItems)
-                    {
-                                <a asp-page-handler="DoSomething" asp-route-id="@item.Id">@item.Name</a>
-                    }
-                </ul>
-                </div>
+                @foreach (var item in Model.FoodItems)
+                {
+                    <ul>
+                        <a asp-page-handler="SelectFoodToBeChecked" asp-route-id="@item.Id">@item.Name</a>
+                    </ul>
+                }
             </div>
+        </div>
     }
     else if (activeTab == "2")
     {
         <div>
-            <p>Content for Tab 2</p>
-
             <form method="post">
                 <input type="text" name="InputText" />
                 <button type="submit" name="edit_command" value="new_food">Submit</button>

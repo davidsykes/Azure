@@ -1,5 +1,5 @@
-﻿using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.DatabaseObjects;
+﻿using DatabaseAccess.DatabaseObjects;
+using DatabaseAccessInterfaces;
 
 namespace DatabaseAccess
 {
@@ -17,6 +17,6 @@ namespace DatabaseAccess
 
         public string Name => _foodItem.Name;
 
-        public int Id => _foodItem.Id;
+        public Int64 Id => _foodItem.Id;
     }
 }

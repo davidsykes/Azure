@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLDatabaseAccess", "SQLDat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLiteDatabaseAccess", "SQLiteDatabaseAccess\SQLiteDatabaseAccess.csproj", "{B6B52A03-F6F8-49C0-B764-B1BAC3B176C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAccessInterfaces", "DatabaseAccessInterfaces\DatabaseAccessInterfaces.csproj", "{A532C64D-C61E-4B50-A39C-99A7D402EB20}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLLibrary", "SQLLibrary\SQLLibrary.csproj", "{5A7CD7A2-ED8B-4ED9-8DCA-DC4B9EC64B85}"
@@ -41,10 +39,6 @@ Global
 		{B6B52A03-F6F8-49C0-B764-B1BAC3B176C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6B52A03-F6F8-49C0-B764-B1BAC3B176C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6B52A03-F6F8-49C0-B764-B1BAC3B176C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A532C64D-C61E-4B50-A39C-99A7D402EB20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A532C64D-C61E-4B50-A39C-99A7D402EB20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A532C64D-C61E-4B50-A39C-99A7D402EB20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A532C64D-C61E-4B50-A39C-99A7D402EB20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D0EDEEB-5F76-4E1F-9EF6-CC363AEE55E7}.Release|Any CPU.ActiveCfg = Release|Any CPU

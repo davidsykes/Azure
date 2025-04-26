@@ -1,14 +1,14 @@
 ﻿#nullable disable
 using SQLiteLibrary.Attributes;
 
-namespace DatabaseAccessInterfaces.DatabaseObjects
+namespace DatabaseAccess.DatabaseObjects
 {
 
     [TableName("Supermarkets")]
     public class Supermarket
     {
-        [PrimaryKey]
-        public int Id { get; set; }
+        [AutoIncrementPrimaryKey]
+        public Int64 Id { get; set; }
         public string Name { get; set; }
     }
 }

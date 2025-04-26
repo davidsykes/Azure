@@ -1,6 +1,5 @@
-﻿using SQLiteLibrary;
-using SQLiteLibrary.Attributes;
-using SQLiteLibrary.TableAnalysis;
+﻿using SQLiteLibrary.Attributes;
+using SQLLibraryInterface;
 using System.Reflection;
 
 namespace SQLLibrary.TableAnalysis

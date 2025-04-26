@@ -1,6 +1,5 @@
-﻿using DatabaseAccessInterfaces;
-using DatabaseAccessInterfaces.DatabaseObjects;
-using Microsoft.Data.SqlClient;
+﻿using DatabaseAccess.DatabaseObjects;
+using DatabaseAccessInterfaces;
 using SQLDatabaseAccess;
 using SQLiteDatabaseAccess;
 using SQLiteLibrary;
@@ -36,19 +35,22 @@ namespace DatabaseAccess
             _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
                 =>
             {
+                tr.CreateTable<FoodItem>();
+                tr.CreateTable<Supermarket>();
                 tr.CreateTable<ProductPrice>();
             });
         }
 
         private void CreateAzureTables()
         {
+            //AUTO_INCREMENT
             CreateAzurePricesTable();
         }
 
 
         public void CreateAzurePricesTable()
         {
-            string tableCommand = @"CREATE TABLE Prices (FoodId INT, ShopId INT, Quantity MONEY, Price MONEY);";
+            string tableCommand = @"CREATE TABLE Prices (ShopId INT PRIMARY KEY,FoodId INT PRIMARY KEY, Quantity MONEY, Price MONEY);";
 
 
             _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
@@ -68,8 +70,6 @@ namespace DatabaseAccess
 
         public IList<FoodItem> GetFoodItems()
         {
-            //var query = "SELECT Id, Name FROM FOODS";
-            //return _oldDatabaseAccessImplementation.Query<FoodItem>(query);
             return _databaseConnection.Select<FoodItem>();
         }
 
@@ -80,24 +80,37 @@ namespace DatabaseAccess
 
         public void AddNewSupermarket(string name)
         {
-            throw new NotImplementedException();
-            //_oldDatabaseAccessImplementation.AddNewSupermarket(new DatabaseString(name));
+            var supermarket = new Supermarket
+            {
+                Name = name
+            };
+            _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
+                => tr.InsertRow(supermarket));
         }
 
         public IList<Supermarket> GetSupermarkets()
         {
-            //var query = "SELECT Id, Name FROM SUPERMARKETS";
             return _databaseConnection.Select<Supermarket>();
-            //return _oldDatabaseAccessImplementation.Query<Supermarket>(query);
         }
 
         public void AddPrice(int foodId, int supermarketId, double quantity, double price)
         {
-            var pricing = new ProductPrice();
+            var pricing = new ProductPrice
+            {
+                ShopId = supermarketId,
+                FoodId = foodId,
+                Quantity = quantity,
+                Price = price
+            };
 
             _databaseConnection.RunInTransaction(
                 (IDatabaseTransaction transaction) =>
-                transaction.InsertRow(pricing));
+                transaction.UpdateRow(pricing));
+        }
+
+        public IList<ProductPrice> GetFoodPrices(int foodId)
+        {
+            return _databaseConnection.Select<ProductPrice>(where: $"FoodId={foodId}");
         }
     }
 }
