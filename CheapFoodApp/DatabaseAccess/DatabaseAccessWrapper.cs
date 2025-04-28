@@ -43,15 +43,55 @@ namespace DatabaseAccess
 
         private void CreateAzureTables()
         {
-            //AUTO_INCREMENT
-            CreateAzurePricesTable();
+            if (!TableExists("Foods"))
+            {
+                CreateAzureFoodsTable();
+            }
+            if (!TableExists("Supermarkets"))
+            {
+                CreateAzureSupermarketsTable();
+            }
+            if (!TableExists("Prices"))
+            {
+                CreateAzurePricesTable();
+            }
         }
 
+        private bool TableExists(string name)
+        {
+            var results = _databaseConnection.Select<FoodItem>(
+                query: $"SELECT Name FROM sysobjects  WHERE xtype='u' AND name='{name}'");
+            return results.Any();
+        }
+
+        public void CreateAzureFoodsTable()
+        {
+            string tableCommand =
+@"CREATE TABLE Foods (Id BIGINT PRIMARY KEY IDENTITY(1,1),NAME CHAR(200) NOT NULL);";
+
+            _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
+                =>
+            {
+                tr.ExecuteNonQuery(tableCommand);
+            });
+        }
+
+        public void CreateAzureSupermarketsTable()
+        {
+            string tableCommand =
+@"CREATE TABLE Supermarkets (Id BIGINT PRIMARY KEY IDENTITY(1,1),NAME VARCHAR(MAX) NOT NULL);";
+
+            _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
+                =>
+            {
+                tr.ExecuteNonQuery(tableCommand);
+            });
+        }
 
         public void CreateAzurePricesTable()
         {
-            string tableCommand = @"CREATE TABLE Prices (ShopId INT PRIMARY KEY,FoodId INT PRIMARY KEY, Quantity MONEY, Price MONEY);";
-
+            string tableCommand =
+@"CREATE TABLE Prices (ShopId BIGINT,FoodId BIGINT, Quantity float, Price float, PRIMARY KEY(ShopId,FoodId));";
 
             _databaseConnection.RunInTransaction((IDatabaseTransaction tr)
                 =>
@@ -105,7 +145,10 @@ namespace DatabaseAccess
 
             _databaseConnection.RunInTransaction(
                 (IDatabaseTransaction transaction) =>
-                transaction.UpdateRow(pricing));
+                {
+                    transaction.DeleteRow(pricing);
+                    transaction.UpdateRow(pricing);
+                });
         }
 
         public IList<ProductPrice> GetFoodPrices(int foodId)

@@ -5,5 +5,6 @@
         void Close();
         IDatabaseCommand CreateDatabaseCommand(string query, IDatabaseTransactionWrapper? transactionWrapper);
         IDatabaseTransactionWrapper CreateTransaction();
+        string GetSelectIdentityCommand();
     }
 }

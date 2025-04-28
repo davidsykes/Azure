@@ -125,10 +125,10 @@ namespace SQLLibrary.SQLite
         {
             ExecuteNonQuery(transaction, command, parameters);
 
-            command = "; SELECT last_insert_rowid()";
+            command = _connection.GetSelectIdentityCommand();
             var sCommand = _connection.CreateDatabaseCommand(command, transaction);
             var result = sCommand.ExecuteScalar() ?? throw new SQLiteLibraryException("Null result from ExecuteScalar");
-            var resultAsInt = (long)result;
+            var resultAsInt = (long)(decimal)result;
             return resultAsInt;
         }
 

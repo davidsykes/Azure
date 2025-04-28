@@ -36,5 +36,10 @@ namespace SQLiteDatabaseAccess
 
             return new SQLiteCommandWrapper(_connection, commandText, transaction?.SqliteTransaction);
         }
+
+        public string GetSelectIdentityCommand()
+        {
+            return "; SELECT last_insert_rowid()";
+        }
     }
 }

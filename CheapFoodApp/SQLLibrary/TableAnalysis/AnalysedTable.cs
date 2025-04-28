@@ -124,7 +124,12 @@ namespace SQLLibrary.TableAnalysis
             if (_upsertQuery1 == null)
             {
                 StringWriter sw = new();
-                sw.Write($"INSERT OR IGNORE INTO {TableName} (");
+                //sw.Write($"INSERT IGNORE INTO {TableName} (");
+                //sw.Write(string.Join(',', Properties.Select(p => p.Name)));
+                //sw.Write(") VALUES (");
+                //sw.Write(string.Join(',', Properties.Select(p => "@" + p.Name)));
+                //sw.Write(");");
+                sw.Write($"INSERT INTO {TableName} (");
                 sw.Write(string.Join(',', Properties.Select(p => p.Name)));
                 sw.Write(") VALUES (");
                 sw.Write(string.Join(',', Properties.Select(p => "@" + p.Name)));

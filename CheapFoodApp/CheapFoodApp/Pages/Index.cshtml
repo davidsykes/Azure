@@ -28,7 +28,7 @@
 <div class="tab-content mt-3">
     @if (@Model.FoodBeingEdited != null)
     {
-        <p>Prices for @Model.FoodBeingEdited.Name (@Model.FoodBeingEdited.Id)</p>
+        <p>Prices for @Model.FoodBeingEdited.Name (Id=@Model.FoodBeingEdited.Id)</p>
 
 
         @foreach (var item in Model.PricesForFoodBeingEdited)

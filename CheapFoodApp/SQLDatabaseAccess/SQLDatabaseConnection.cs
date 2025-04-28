@@ -52,5 +52,10 @@ namespace SQLDatabaseAccess
 
             return new SQLCommandWrapper(_connection, commandText, transaction?.SqlTransaction);
         }
+
+        public string GetSelectIdentityCommand()
+        {
+            return "SELECT @@IDENTITY";
+        }
     }
 }
