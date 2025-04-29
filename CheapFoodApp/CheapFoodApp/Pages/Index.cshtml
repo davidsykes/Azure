@@ -36,15 +36,8 @@
             <p>@Model.Supermarket(item.ShopId) @item.Quantity = £@item.Price</p>
         }
 
-        <select id="supermarkets" name="supermarkets">
-            @foreach (var item in Model.Supermarkets)
-            {
-                <option value="@item.Id">@item.Name</option>
-            }
-        </select>
-
         <form method="post">
-            <label for="selectedAddPriceSupermarket">Choose an option:(@Model.FoodBeingEdited.Id)</label>
+            <label for="selectedAddPriceSupermarket">Update a price:</label>
             <select id="selectedAddPriceSupermarket" name="SelectedAddPriceSupermarket">
                 @foreach (var item in Model.Supermarkets)
                 {
