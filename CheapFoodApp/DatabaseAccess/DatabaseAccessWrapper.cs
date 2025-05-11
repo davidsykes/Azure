@@ -13,9 +13,8 @@ namespace DatabaseAccess
         readonly IActualDatabaseConnection _actualDatabaseConnection;
         readonly IDatabaseConnection _databaseConnection;
 
-        public DatabaseAccessWrapper(bool IsRunningOnAzure)
+        public DatabaseAccessWrapper(bool IsRunningOnAzure, string sqlDatabasePath)
         {
-            string sqlDatabasePath = "D:\\TestData\\CheapFood.sql";
             _actualDatabaseConnection = IsRunningOnAzure ? new SQLDatabaseConnection() : new SQLLiteDatabaseConnection(sqlDatabasePath);
             var dbServices = new DBServices();
             _databaseConnection = dbServices.OpenConnection(_actualDatabaseConnection);

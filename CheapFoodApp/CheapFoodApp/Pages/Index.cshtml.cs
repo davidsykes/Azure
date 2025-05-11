@@ -16,6 +16,7 @@ namespace CheapFoodApp.Pages
         public IList<Supermarket> Supermarkets;
         public FoodBeingEdited? FoodBeingEdited;
         public IList<ProductPrice> PricesForFoodBeingEdited;
+        private readonly IConfiguration _configuration;
 
         [BindProperty]
         public string InputText { get; set; } = "";
@@ -29,12 +30,16 @@ namespace CheapFoodApp.Pages
         [BindProperty]
         public string AddPriceId { get; set; } = "";
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
+
+            string? database = _configuration["database"];
+
             try
             {
-                _databaseAccess = new DatabaseAccessWrapper(IsRunningOnAzure);
+                _databaseAccess = new DatabaseAccessWrapper(IsRunningOnAzure, database!);
             }
             catch (SQLiteLibraryException ex)
             {

@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Add command line arguments to configuration
+builder.Configuration.AddCommandLine(args);
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
